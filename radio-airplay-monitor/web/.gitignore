@@ -1,0 +1,8 @@
+node_modules/
+dist/
+public/data/
+*.tsbuildinfo
+# tsc -b (composite) emits these next to the source config; not source
+vite.config.js
+vite.config.d.ts
+.DS_Store

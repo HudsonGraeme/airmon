@@ -1,0 +1,53 @@
+---
+title: Pillow AVIF support
+description: Pillow is the friendly PIL fork. It supports AVIF with a plugin.
+keyword: Pillow
+subcategory: coding
+support: partial
+datePublished: 2022-04-04
+dateModified: 2022-04-04
+sources:
+  - github.com/python-pillow/Pillow
+  - github.com/python-pillow/Pillow/pull/5201
+  - github.com/fdintino/pillow-avif-plugin
+  - pillow.readthedocs.io/en/stable/
+  - pypi.org/project/Pillow/
+  - en.wikipedia.org/wiki/Python_Imaging_Library
+  - python-pillow.org/
+tags:
+  - avif
+  - image format
+  - pillow
+  - python image library
+  - pillow avif
+  - open source
+  - files
+  - image
+  - avif image
+  - avif support
+  - multiple images
+  - support
+  - format
+  - library
+questions:
+  - Does Pillow support AVIF?
+  - Does Python have AVIF support?
+---
+
+## What is Pillow?
+
+The Python Imaging Library is a free and open-source extension for the Python programming language that supports various image formats. Versions for Windows, Mac OS X, and Linux are available. PIL 1.1.7, released in September 2009, supports Python versions 1.5.2 to 2.7. PIL was abandoned in 2011.
+
+After PIL, a successor project named Pillow forked the repository and added Python 3.x support. In addition to Debian and Ubuntu (since 13.04), this fork has been adopted to replace the original PIL.
+
+PIL was not compatible with setuptools. The PIL release schedule of twice a year was too infrequent to accommodate the large number and frequency of issues reported.
+
+With Pillow, you will find extensive support for a wide range of file formats, efficient internal representation, and fairly powerful image processing capabilities.
+
+The core image library provides fast access to a few basic pixel formats. It should provide a solid platform for general imaging applications.
+
+## Pillow AVIF support
+
+Support is not yet available, as seen from the <Link text="Github tickets" href="github.com/python-pillow/Pillow/pull/5201"/>.
+
+You can use a <Link text="custom AVIF plugin created by Frankie Dintino" href="github.com/fdintino/pillow-avif-plugin"/> until then. This plugin aims to add support for AVIF files until official support is added. You must include import pillow_avif somewhere in your application to register this plugin with Pillow.

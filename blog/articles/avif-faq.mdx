@@ -1,0 +1,665 @@
+---
+title: AVIF FAQ - An in-depth guide explaining it all.
+description: A Q&A-based FAQ answering every question about the new image codec AVIF.
+keyword: AVIF Summary
+datePublished: 2021-10-30
+dateModified: 2021-10-30
+sources:
+  - downloads.aomedia.org/assets/pdf/AV1-ISO-Base-Media-File-Format-Binding-Specification.pdf
+  - download.opencontent.netflix.com.s3.amazonaws.com/AV1/readme.txt
+  - downloads.aomedia.org/assets/pdf/symposium-2019/slides/CyrilConcolato_Netflix-AVIF-AOM-Research-Symposium-2019.pdf
+  - aomediacodec.github.io/av1-avif/
+  - aomediacodec.github.io/av1-isobmff/
+  - aomediacodec.github.io/av1-spec/av1-spec.pdf
+  - blog.cloudflare.com/generate-avif-images-with-image-resizing/
+  - blog.getpaint.net/2019/09/18/paint-net-4-2-2-is-now-available/
+  - blog.getpaint.net/2020/08/25/paint-net-4-2-14-alpha-build-7542/
+  - bugzilla.mozilla.org/show_bug.cgi?id=1634741
+  - caniuse.com/avif
+  - code.videolan.org/videolan/vlc/-/issues/21568
+  - datatracker.ietf.org/doc/html/rfc2119
+  - docs.fileformat.com/image/avif/
+  - en.wikipedia.org/wiki/AV1
+  - en.wikipedia.org/wiki/AV1#cite_note-aomediacodec.github.io_av1-avif-168
+  - github.com/AOMediaCodec/av1-avif
+  - github.com/ImageMagick/ImageMagick/issues/1432
+  - githubmemory.com/repo/Nyx0uf/qlImageSize/issues/49
+  - jakearchibald.com/2020/avif-has-landed/
+  - levelup.gitconnected.com/avif-the-next-gen-image-format-you-need-to-know-about-631e4476dc71
+  - mpulp.mobi/2020/11/11/meet-av1-image-file-format-avif-for-short/
+  - netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4
+  - norkin.org/pdf/DCC_2018_AV1_film_grain.pdf
+  - php.watch/versions/8.1/gd-avif
+  - reachlightspeed.com/blog/using-the-new-high-performance-avif-image-format-on-the-web-today/
+  - titanwolf.org/Network/Articles/Article?AID=8129d472-6c1b-4a18-8642-09b327c5a3fe
+  - www.bram.us/2020/09/08/how-to-use-av1-image-file-format-avif/
+  - www.finally.agency/blog/what-is-avif-image-format
+  - www.ionos.com/digitalguide/websites/web-design/avif-format/
+  - www.irfanview.com/main_formats.htm
+  - www.iso.org/standard/66067.html
+  - www.iso.org/standard/68960.html
+  - www.iso.org/standard/74417.html
+  - www.keycdn.com/blog/avif
+  - www.lambdatest.com/blog/avif-image-format/
+  - www.mediaevent.de/bilddatenformate-jpg-avif-png-webp/
+  - www.medianova.com/en-blog/avif-all-you-need-to-know-about-this-new-image-file-format/
+  - www.mozilla.org/en-US/firefox/93.0/releasenotes/
+  - www.reddit.com/r/AV1/comments/a6rmm0/netflix_avif_samples_av1_image_file_format/
+  - www.shimmercat.com/image-api-feature/avif.html
+  - www.smashingmagazine.com/2021/09/modern-image-formats-avif-webp/
+  - www.zdnet.com/article/chrome-and-firefox-are-getting-support-for-the-new-avif-image-format/
+tags:
+  - av1 codec
+  - av1 image format
+  - avif encoding
+  - avif file
+  - avif format
+  - avif image
+  - avif image format
+  - wide color gamut
+  - image quality
+  - avif images
+  - avif image format
+  - google chrome
+  - avif image
+  - browser
+  - browser support
+  - chroma subsampling
+  - codec
+  - compression
+  - compression technique
+  - file
+  - file format
+  - file size
+  - format
+  - high dynamic range
+  - image
+  - image codec
+  - image compression
+  - image file format
+  - image format
+  - lossless
+  - lossless compression
+  - lossless webp
+  - lossy compression
+  - multiple image formats
+  - new format
+  - new image format
+  - progressive rendering
+  - smaller file size
+  - video codec
+questions:
+  - What is an AVIF file?
+  - What file type is AVIF?
+  - Who created AVIF?
+  - How was AVIF created?
+  - Is AVIF based on other formats?
+  - Is AVIF open source?
+  - Does AVIF have patents?
+  - What are the benefits of AVIF?
+  - What is the downside of AVIF?
+  - What is the goal of AVIF?
+  - What is AVIF used for?
+  - Why AVIF?
+  - Should I use AVIF?
+  - How can I use AVIF in a web environment?
+  - What features does AVIF support?
+  - Is AVIF a lossless or lossy format?
+  - Is AVIF lossless?
+  - Is AVIF lossy?
+  - Does AVIF support transparency?
+  - Does AVIF support animation?
+  - Does AVIF support SDR?
+  - Does AVIF support HDR?
+  - Does AVIF support Wide Color Gamut?
+  - What color bit depth does AVIF support?
+  - What color space does AVIF support?
+  - What chroma subsampling does AVIF support?
+  - Does AVIF support film grain?
+  - Does AVIF support tiling?
+  - Does AVIF support layers?
+  - What is the highest megapixel count for AVIF?
+  - How good is AVIF encoding speed?
+  - How good is AVIF decoding speed?
+  - Why is AVIF better than other compression codecs?
+  - Why is AVIF worse than other codecs?
+  - What is the best file format for a web graphic?
+  - Is AVIF better than JPG?
+  - What does AVIF offer over JPEG 2000?
+  - Is AVIF better than PNG?
+  - What is the difference between AVIF and HEIF?
+  - Is AVIF better than WebP?
+  - Should I use WebP or AVIF?
+  - Is AVIF better than JPEG XL?
+  - Should I use AVIF or JXL?
+  - How do I convert to AVIF?
+  - how do I convert AVIF files
+  - How do I convert AVIF to JPG?
+  - How do I convert AVIF to PNG?
+  - Is AVIF supported?
+  - How do I make an AVIF file?
+  - How do I export an AVIF file?
+  - What type of software and services support AVIF?
+  - How do I view an AVIF file?
+  - How do I open an AVIF file?
+  - How do I read an AVIF file?
+  - How do I play an AVIF file?
+  - How do I view an AVIF image?
+  - How do I open an AVIF image?
+  - How do I open an AVIF image?
+  - How do I play an AVIF image?
+  - What browsers support AVIF?
+  - Do smartphone browsers support AVIF?
+  - Which OS supports AVIF?
+  - How do I open an AVIF file on mac?
+  - Does Android support AVIF?
+  - What software supports AVIF?
+  - What mail clients support AVIF?
+  - What online services support AVIF?
+  - What CDNs support AVIF?
+  - Does WordPress support AVIF?
+---
+
+## ⏩ GENERAL INFORMATION
+
+## Introduction
+
+AVIF is a new image format introduced in 2019. While still maintaining high-quality internet viewing, it offers better compression. As a foundation for using AVIF for your pictures or website and services, we hope this article will serve as an introduction to AVIF. We'll cover some of the most frequently asked questions about AVIF, such as what it is and what it does, how it compares to JPEG, PNG, WebP, or GIF, and what software and services support it.
+
+## What is an AVIF file
+
+Related question: <Link href="#whyavif" text="Why AVIF"/>
+
+AVIF (AV1 image format) is a royalty-free, open-source picture format. AVIF photo files are smaller than JPEG, PNG, and WebP, but they have limited support and speed.
+
+In 2019, many businesses joined forces on this project. Amazon, Apple, and Google are among the supporters. AVIF's momentum has been growing over the last few years. The new format has already been adopted by several well-known companies such as Google, Facebook, and Netflix.
+
+The Alliance for Open Media (AOM) created AVIF as a new picture format. This format was designed to offer better compression efficiency and more comprehensive features than existing image formats. Image and image sequences can be stored as AVIF files compressed using AV1 and stored in HEIF containers.
+
+## What are the benefits of AVIF
+
+Related question: <Link href="#whatfeaturesdoesavifsupport" text="Features of AVIF"/>
+
+AVIF is a royalty-free image format optimized for compression in an open-source environment. With the use of the new standard, data usage will be reduced, internet speeds will increase, and interoperability between devices will improve. With the current offering, HDR images can be delivered using HEVC at bitrates below what would be needed with JPEG 2000 or JPEG XR while still providing better quality than JPEG images at equal bitrate.
+
+This encoding efficiency also has a massive advantage in interoperability. As a consortium, AOMedia is developing new video and image coding formats working across all screens from mobile phones to high-end TVs for streaming or viewing content on any device or platform without any licensing fees.
+
+Additionally, the foundation aims to create royalty-free codecs which can be used without paying patent royalties while maintaining visual quality at home broadband data rates at every possible screen size. As a result, Internet service providers would deliver higher resolution content more efficiently across their networks. As a result, web hosts and internet storage providers could lower their costs for providing high-resolution video content without licensing fees. The result is a wide range of choices and affordability for consumers!
+
+## What is the downside of AVIF
+
+Related question: <Link href="#howgoodisavifencodingspeed" text="AVIF Encoding Speed"/>
+
+AVIF images take longer to encode and create. For sites creating images dynamically, this could cause problems. Encoding speed is, however, being improved by the AVIF team.
+
+Critics also claim the image format is an extraction of AV1, so it doesn't focus on being a sole image format and therefore lacks optimization, unlike JPEG XL.
+
+AVIF images may also consume more CPU power than other codecs for display. However, smaller file sizes may compensate for it.
+
+Many programs do not yet support it (e.g., Adobe Photoshop), and 70% of current user browsers can display AVIF images.
+
+## What is the goal of AVIF
+
+Related question: <Link href="#whyavif" text="Why AVIF"/>
+
+Compared to the existing image formats, AVIF was designed to provide royalty-free images with better compression efficiency. AVIF algorithm was released in 2019 and could offer both a good experience and better quality for viewing images on websites.
+
+## Why AVIF
+
+Related question: <Link href="#whatisthegoalofavif" text="What is the goal of AVIF"/>
+
+JPEG was introduced in 1992 and is widely used. Multiple color subsamples are supported, including 420, 422, and 444. Before performing lossy compression, JPEG converts RGB data to a luma-chroma representation. On blocks of 8x8, the discrete cosine transform (DCT) is used as the decorrelating transform. Then entropy coding and quantization are applied. However, JPEG supports 8-bit images and does not support alpha channels. In JPEG-XT, higher bit-depths, alpha channels, lossless compression, and other features are added in a backward-compatible way.
+
+As a successor to JPEG, JPEG 2000 was introduced as a format based on discrete wavelet transform (DWT). Additionally, it provided a whole host of features such as spatial scalability, region of interest coding, an extensive range of bit-depths, and flexible color planes. In 2004, the motion extension made it the video coding standard for digital cinema.
+
+Google introduced the webp format around 2010. Besides adding decoding support to Android devices and Chrome browsers, Google released libraries that developers could integrate into their apps on other platforms, like iOS. The Webp video coding format is based on intraframe coding from the VP8 video coding format. However, Webp does not offer all the flexibility of JPEG 2000. However, it is as efficient and faster as PNG in certain situations due to its lossless coding and lossless alpha channel support.
+
+HEVC, or High-Efficiency Video Coding, is the successor to H.264, also referred to as Advanced Video Coding (AVC). A high-efficiency image file format (HEIF) can be used to encapsulate HEVC intra-frame coding. This format is most often used by Apple devices to store recorded images. Patent issues prevent it from spreading to other types of software, and it lacks support.
+
+The AV1 Image File Format (AVIF) encapsulates AV1 intra-frame coded content, taking advantage of excellent compression gains provided by AV1 compared to its predecessors.
+
+JPEG needs to be replaced by a widely supported alternative, has better compression efficiency, and has a broader feature set while being royalty-free for seamless integration into all types of software and services. This is where AVIF comes in.
+
+## What is AVIF used for
+
+Related question: <Link href="#whatisthegoalofavif" text="What is the goal of AVIF"/>
+
+There are many potential uses for AVIF. It was designed to replace PNG, JPEG, and WebP in all images, including photos and graphics. Businesses should use it because AVIF files are much smaller than JPEGs and can compress several megabytes into bytes with no noticeable quality loss. Furthermore, this decreases data usage while speeding up your website's loading, facilitating faster access to information while increasing conversions (the percentage of people who buy from your website).
+
+## ⏩ CREATION OF AVIF
+
+## Who created AVIF
+
+Related question: <Link href="#howwasavifcreated" text="How was AVIF created"/>
+
+File compression is the topic of a group of leading digital economy players formed in 2015. The Alliance for Open Media (AOMedia), which includes companies like Amazon, Cisco, Facebook, Google (including YouTube), Mozilla, Microsoft, Netflix, Intel, AMD, and others, focuses on internet data usage. In addition to benefiting individual websites, improved file compression can also maximize the performance of the web as smaller files speed up data traffic, use less energy, and save storage. For a technology to become a standard, it must be free of licensing fees and openly accessible.
+
+## How was AVIF created
+
+Related question: <Link href="#whocreatedavif" text="Who created AVIF"/>
+
+The AVIF still picture format has been developed by Alliance for Open Media (AOMedia) in collaboration with Google, Cisco, and Xiph.org from keyframes of the AV1 video format. Netflix has already stated the AVIF image format has superior image quality to JPEG, PNG, and even the newer WebP image formats in terms of compressed file size. With JPEG around for decades, it's time for a new advanced alternative, making AVIF an exciting development with significant potential for adoption.
+
+## What is the technology stack behind AVIF
+
+Related question: <Link href="#howwasavifcreated" text="Is AVIF based on other formats"/>
+
+AVIF is based on four different technologies. It uses base elements of the ISO BMFF Byte Stream Format, combines it with IFF/HEIF for image-specific and codec-agnostic functions, uses MIAF for additional structural contraints of ISOBMFF and the mapping of the AV1 KeyFrame.
+
+## Is AVIF based on other formats
+
+Related question: <Link href="#whatisthetechnologystackbehindavif" text="What is the technology stack behind AVIF"/>
+
+As a result of the consortium's efforts, license-free, open video codecs for moving images and the AV1 Image File Format (AVIF) for images have been developed. It combines AV1 compression algorithms with HEIF container technology, which Apple has been using for many years. HEIF offers a consistent and standardized method for exchanging, storing (e.g., metadata), and transmitting image content encoded with AV1.
+
+AVIF and HEIF overlap. AVIF and HEIF encode image data using different compression methods. Instead of AV1 compression, the HEIF format uses the HEVC video format.
+
+## Is AVIF open source
+
+Related question: <Link href="#doesavifhavepatents" text="Does AVIF have patents"/>
+
+AVIF is an open-source image format and has a royalty-free license model, so adoption in open-source projects is not hindered. AVIF was designed to make adoption easy for open-source projects.
+
+AV1 licensing models should "not hinder the adoption of open source projects," is all the Alliance for Open Media has to say regarding non-commercial usage. Still, it leaves room for interpretation depending on what makes sense economically rather than a technical approach alone.
+
+## Does AVIF have patents
+
+Related question: <Link href="#isavifopensource" text="Is AVIF open-source"/>
+
+A Luxembourg-based company, Sisvel, has formed a patent pool and is selling a patent license for the AV1 video codec on which AVIF is based. Patent claims for this pool appeared on 10 March 2020 but were announced in early 2019. It contains over 1050 patents. Patent claims are to be challenged. It has been stated Sisvel will not seek royalties for content, but their license does not exempt software. AOM has not responded to the list of patent claims. After Sisvel's initial announcement, their statement reiterated their commitment to royalty-free patent licensing and mentioned AOMedia's patent defense program to help protect AV1 ecosystem participants in case of patent claims.
+
+## ⏩ FEATURES
+
+## What features does AVIF support
+
+AVIF combines high-quality compression with a wide range of functions to meet the needs of a contemporary image format. Both lossless and lossy compression are supported. Similarly, transparent image areas are also stored in an alpha channel and other image and graphic formats. Transparency data can be used to make user interfaces, collages, or company logos.
+
+High dynamic range (HDR) images, supporting both Rec 2020 and Rec 709 color spaces; Lossless compression; Lossy compression; Monochrome (alpha/depth), or multi-component images with an alpha channel for transparency; Any color space including wide gamut, ISO/IEC CICP and ICC profiles like sRGB, Adobe RGB(1998), Pro Photo RGB, etc. Support of either monochromatic + alpha data or full chroma subsampling in any combination between Y'CbCr components on a per-pixel basis provides flexibility to encode color information where it's needed most while still achieving good compression ratios. The possibility to enable/disable features at the image block level, rather than on a per-pixel basis. This allows some exciting use-cases like encoding low dynamic range (LDR) images with high dynamic range (HDR) data - e.g., remapping LDR values into HDR space or vice versa; Scalability support for resolutions below 16 pixels per channel in width and height by enabling tiling of encoded image blocks across multiple frames.
+
+AVIF is better than other codecs because it can handle more than other formats.
+
+tl;dr: The AVIF image format supports the following features:
+
+- Lossless compression
+- Lossy compression
+- High dynamic range
+- Any color space including wide color gamut, ISO/IEC CICP, and ICC profiles
+- 8, 10, 12-bit depth
+- 4:2:0, 4:2:2, 4:4:4 chroma subsampling
+- Monochrome (alpha/depth) or multi-components
+- Film grain
+
+## Is AVIF a lossless or lossy format
+
+AVIF provides both lossless and lossy modes of operation, i.e., you can choose between them depending on the purpose of the application.
+
+## Is AVIF lossless
+
+Related question: <Link href="#isaviflossy" text="Is AVIF lossy"/>
+
+As the name indicates, lossless compression does not result in data loss; all information within the original file can be reconstructed. Lossless AVIF means the size of the file can be compressed without affecting the visual quality. The AVIF lossless mode isn't excellent when compared to some other lossless formats. Compared to different lossless versions of WebP and PNG, WebP and even PNG outperformed the lossless AVIF image in byte sizes. AVIF with lossy compression offers better byte size savings than AVIF with lossless compression.
+
+## Is AVIF lossy
+
+Related question: <Link href="#isaviflossless" text="Is AVIF lossless"/>
+
+The AVIF format supports lossy compression, which allows you to reduce file sizes even further. AVIF compression offers a vast color space selection compared to JPEG. It enables you to choose lossless or lossy compression based on your application's requirements. A lossy compression process results in some data loss during the encoding process, reducing picture quality. The AVIF format, however, allows you to specify how much loss is acceptable.
+
+## Does AVIF support transparency
+
+Alpha channels are used to store transparency data in addition to lossless and lossy compression. AVIF supports transparency information at both object and image levels. It enables the representation of objects within images with defined opacities.
+
+## Does AVIF support animation
+
+It is also possible to create animated sequences, similar to GIF animations (Animated GIFs). For image elements and sequences, AVIF supports multi-layer images. AVIF files are designed to be HEIF-compliant for both image items and sequences.
+
+## Does AVIF support SDR
+
+Related question: <Link href="#doesavifsupporthdr" text="Does AVIF support HDR"/>
+
+With AVIF's HDR support, standard dynamic range is also supported, regardless of whether the image is sRGB or BT.709 or has wide color gamuts.
+
+## Does AVIF support HDR
+
+Related question: <Link href="#doesavifsupportsdr" text="Does AVIF support SDR"/>
+
+High-dynamic-range (HDR) technology enhances the quality of high-contrast images by enabling uniform brightness, intense colors, and strong contrasts. AVIF is ideally suited for HDR. It can produce images beyond the usual 8-bit color depth of standard dynamic range images (SDR). (AVIF can produce 10-bit, 12-bit, and higher color depths). It is possible to remap the color depth of an entire image or any portion thereof using AVIF to allow for a smooth transition from SDR image data to HDR image data and vice versa. PQ or HLG functions, BT.2020 color primaries, and BT.2100 color space are supported.
+
+## What is the highest megapixel count for AVIF
+
+As some decoders may not be able to handle larger images, no single-coded image exceeds 4k resolution. Following AV1 level definitions, coded image items complying with the AVIF Baseline profile may not contain more pixels than 8912896 or have wider widths or higher heights than 8192 or 4352. Using grid derivation, it is still possible to create larger images using the Baseline profile. Depending on how the image is decomposed, you may encounter discontinuities along the grid boundaries. In this case, however, a coded image will have a maximum size of 65536x65536.
+
+## ⏩ AVIF ADVANCED FEATURES
+
+## Does AVIF support Wide Color Gamut
+
+Related question: <Link href="#doesavifsupporthdr" text="Does AVIF support HDR"/>
+
+AVIF also supports extended color spaces (Wide Color Gamut, WCG). Metadata can be used to share HDR information and color gamut information.
+
+## What color bit depth does AVIF support
+
+AVIF supports bit depths of 8, 10, and 12 bits per channel.
+
+## What color space does AVIF support
+
+AVIF supports a wide range of standard and non-standard color spaces, such as Rec 2020, Pro Photo RGB, or sRGB, and ICC profiles and wide color gamuts. Additionally, it supports Color space signaling by CICP (ITU-T H.273 and ISO/IEC 23091-2) and ICC profiles.
+
+## What chroma subsampling does AVIF support
+
+AVIF supports chroma subsampling in 4:2:0, 4:2:2, and 4:4:4. It utilizes the lower understanding of the human visual system for color differences than for luminance differences by implementing less resolution for chroma information than for luma information when encoding images. Subsampling by 420 can be beneficial in cases where the loss due to 420 subsampling is not apparent to the human eye. In such cases, it can be advantageous.
+
+When 420 subsampling is chosen over the original 444 formats, it reduces the number of samples (counting across all three color planes) which must be encoded while depending on the fact the human visual system is more sensitive to luminosity than chroma. 420 subsampling, however, can cause color bleeding and jaggies in locations with color transitions. A codec should support both subsampling formats. There are, however, a few codecs that support 420 subsampling, including WebP.
+
+## Does AVIF support film grain
+
+AVIF uses auto-regressive noise synthesis to support film grain. In AV1, film grain is used in the coding domain to make decoding possible. When estimating film grain, the correlation of grain between color components must be captured. In AV1, the film grain pattern is modeled using an autoregressive (AR) algorithm. AVIF is more flexible for middle band noise but more complicated when it comes to block boundaries.
+
+There is a lot of film grain in movies and TV shows. It is part of the creative process in film. DPs and directors may have spent a lot of time choosing the film grain for their movie or TV show. They may have studied samples of film stock in the past. When digital cameras are used these days, film grain may be added in post-production.
+
+Video can be streamed at a lower bit rate with the film grain tool while providing a better perception of the film grain. In addition, film grain masks some compression artifacts, such as banding, ringing, and blocking. Although the higher subjective quality of an encode using the film grain tool, adding synthesized film grain can decrease some objective quality metrics, such as PSNR.
+
+## Does AVIF support tiling
+
+It takes more CPU power to decode AVIF images for display than other codecs; however, it should be fast enough in practice. The AVIF format supports tiling, which accelerates multi-core CPU encoding.
+
+The image is split into tiles after color transformation, rectangular areas transformed separately and encoded separately. Each tile can be any size, and the entire image can also be considered one tile. All tiles will be the same size (except for those on the left and bottom borders) depending on the size chosen. The advantage of dividing an image into tiles is the decoder will require less memory to decode the image. It can decode selected tiles to achieve partial decoding.
+
+## Does AVIF support layers
+
+A frame can be encoded using multiple spatial layers using AVIF. Based on one or more previous layers, a spatial layer may improve the resolution or quality of the decoded image. An image may also be provided by a layer independent of previous layers. Furthermore, not all layers produce images intended for rendering. In some cases, decoded images are used as intermediates. The layers are then grouped into one or more Operating Points. An Operating Point OBU defines the list of Operating Points, indicates which layers constitute each Operating Point, and provides required decoding capabilities.
+
+## How good is AVIF encoding speed
+
+Related question: <Link href="#howgoodisavifencodingspeed" text="AVIF decoding speed"/>
+
+In general, AVIF takes a long time to encode. The encoding process takes a few seconds at an effort of 2. 'Effort' 3 is significantly better, but it can take a few minutes. A single image encoded with 'Effort' 10 can take 10 minutes or more. A tiled image can be encoded and decoded separately with AVIF because it is sliced into smaller blocks. In terms of encoding, this is useful because it allows blocks to be encoded in parallel, making full use of CPU cores.
+
+## How good is AVIF decoding speed
+
+Related question: <Link href="#howgoodisavifdecodingspeed" text="AVIF encoding speed"/>
+
+There is also the question of CPU usage vs. other formats when it comes to decoding. Although AV1 is starting to get hardware support, we are sure dedicated hardware will be tuned for video than decoding images.
+
+## ⏩ AVIF COMPARISON
+
+## Why is AVIF better than other compression codecs
+
+Related question: <Link href="#whyavif" text="Why AVIF"/>
+
+AVIF seems to offer more potential than any other codec. It is supported by a wide range of applications featuring royalty-free functionality and the highest compression rate in the industry. Several leading technology companies are developing AVIF. To create an ecosystem that would endure, they licensed their codec patents royalty-free. Netflix considers AVIF superior to JPEG and even WebP in terms of compressed file size versus image quality.
+
+## Why is AVIF worse than other codecs
+
+Related question: <Link href="#whatisthedownsideofavif" text="The downside of AVIF"/>
+
+The encoding process takes significantly longer than with standard image formats. As a result, it may not work when used in applications requiring many files to be quickly encoded (e.g., games or scenes with lots of animated characters). It is also possible the more significant file size savings over HEVC could be negated by the longer encoding times. However, this is not necessarily the case since not all encoders are created equal. There is no efficient decoding support for mobile yet, so you can't use them in your apps or games there either.
+
+## What is the best file format for a web graphic
+
+Related question: <Link href="#whatisthegoalofavif" text="The goal of AVIF"/>
+
+The best image file format for a web graphic depends on the type of image and the intended use. SVG is ideal for vector images. If, for example, you wanted to draw a vector drawing of an owl for use on Wikipedia or another educational website, SVG would be the best choice. PNG-24 might be a good choice for making line art for your blog (or something like Reddit) since it offers better image quality and adequate file size.
+
+The AVIF format is perfect for images needing to be maximally compressed. Currently, JPEG XL does not have browser support, but it is excellent for high-fidelity images. If you want less compressed images, you could also use WebP, which is still relatively new but offers excellent compatibility across browsers today even though AVIF performs better, depending on whether each browser handles certain circumstances differently.
+
+## Is AVIF better than JPG
+
+Related article: <Link href="/blog/comparisons/avif-vs-jpg/" text="JPG vs AVIF detailed comparison"/>
+
+Most image codecs will likely be improvements over what we have used so far in JPEG. Despite being an improvement over JPEG 2000, it still cannot compete with AVIF in many ways. In low bandwidth environments, AVIF has proven to be the ideal encoding solution. Images with similar visual quality can be up to ten times smaller than JPEGs.
+
+While JPEG may have the advantage of progressive rendering and work with any software program, AVIF offers many features JPEG lacks, such as optimized compression, HDR support, alpha transparency, and potential higher bit depth.
+
+## What does AVIF offer over JPEG 2000
+
+Related article: <Link href="/blog/comparisons/avif-vs-jpeg2000/" text="JPEG2000 vs AVIF detailed comparison"/>
+
+Compared with other image coding standards such as JPEG2000 or JPEG XR, AVIF offers significant advantages in compression performance. JPEG 2000 fails in many areas, including low compression efficiency and low gain for high-resolution images and color spaces. In particular, in terms of color pictures, AVIF outperforms JPEG2000 by delivering higher quality than the other formats at the same bitrates and achieving similar compression rates, resulting in smaller overall file sizes.
+
+With a less-than-adequate compression algorithm, JP2 struggled to gain market acceptance and enjoyed inadequate browser support. For modern web images, AVIF is a better choice. Thanks to its superior low-fidelity, high-appeal compression, and excellent animation support, AVIF has a perfect chance of becoming the next dominant image format.
+
+With Safari and Edge still to be adopted, it still has some catching up in browser support. AVIF looks likely to break into the mainstream despite any support difficulties with its comprehensive feature set and significant momentum around the format.
+
+## Is AVIF better than PNG
+
+Related article: <Link href="/blog/comparisons/avif-vs-png/" text="PNG vs AVIF detailed comparison"/>
+
+AVIF is worse than PNG in compression efficiency, file size, and time to encode/decode. This is due to AVIF focusing on being superior as a lossy compression format. PNG has better support across browsers and faster encoding/decoding performance (particularly when it comes to decoding). Still, in terms of quality, you're likely not to notice the difference compared with PNG in most cases.
+
+## What is the difference between AVIF and HEIF
+
+Related article: <Link href="/blog/comparisons/avif-vs-heif/" text="HEIF vs AVIF detailed comparison"/>
+
+There have been efforts to develop a better algorithm for image compression for some time. Before AVIF, HEIF was invented. If you use an iPhone, you are already familiar with HEIF images. Even though HEIF saves storage space, it isn't popular with software and services since it is not royalty-free.
+
+## Is AVIF better than WebP
+
+Related article: <Link href="/blog/comparisons/avif-vs-webp/" text="WebP vs AVIF detailed comparison"/>
+
+Upon its release in 2010, WEBP was a compelling alternative to the aging and tired JPEG and PNG formats. Yet eleven years later, WEBP lacks the latest features, such as 4:4:4, HDR images, and high bit depth. As a compressed image format, AVIF is more versatile, especially when it comes to the compression codec and optimization of the image.
+
+While AVIF does lag behind WEBP in browser support, we expect full support shortly. AVIF will then become the dominant image format for both still and animated web images once this happens.
+
+## Is AVIF better than JPEG XL
+
+Related article: <Link href="/blog/comparisons/avif-vs-jpegxl/" text="JPEGXL vs AVIF detailed comparison"/>
+
+Rather than being an off-cut of a video format, JPEG-XL is an image format. Multi-pass progressive rendering and lossless and lossy compressions are supported. It appears lossless compression will be better than WebP's. However, it might not be an excellent match for most web images because lossy compression is tuned to provide high quality rather than acceptable quality. It might be worth it to take a hit in file size to benefit from multi-pass rendering and distance-focused compression.
+
+Images encoded in AVIF and images encoded in JPEG XL are similar for most people. While JPEG XL is faster, the majority of users won't notice the difference. Even when compressed, both formats maintain a high level of appeal. Web pictures will look great, especially when compared to the old legacy JPEG format.
+
+## Should I use AVIF or JXL
+
+Related question: <Link href="#isavifbetterthanjpegxl" text="Is AVIF better than JPEG XL"/>
+
+JPEG XL is a fantastic format. What makes them different is the market acceptance of each of these standards. AVIF is the format you should choose if you are looking for a format intended for your users.
+
+## ⏩ AVIF CONVERSION
+
+## How do I convert to AVIF
+
+Related article: <Link href="/" text="AVIF bulk converter"/>
+
+### Online converters
+
+#### avif.io
+
+avif.io has the upper hand when it comes to compression efficiency. It is by far the fastest converter while being privacy-focused and free. Its convenient way of converting images in bulk allows you to encode a large number of images.
+
+#### Squoosh
+
+Squoosh is currently the most visual way to convert images since the UI is an image comparison slider. It's been open-sourced by Google, so you can view all their settings and algorithms if necessary - it's neat! Netflix has used it too.
+
+### Offline converters
+
+- Squoosh also offers an experimental CLI.
+- ImageMagick allows to read and write AVIF files.
+- Sharp is a NodeJS library based on libvips offering fast conversion.
+
+Some image editing programs like GIMP and Paint.NET allow the saving of images as AVIF files.
+
+### Libraries
+
+Libaom is AOMedia's open-source encoder and decoder for AVIF. Optimized library versions are continuously being released to reduce the cost of encoding AVIF, especially for frequently loaded or high-priority images.
+
+Libavif is the official library to encode and decode AVIF.
+
+Cavif is another library, written in pure Rust.
+
+## How do I convert AVIF to JPG
+
+Related question: <Link href="#howdoiconvertaviftopng" text="Convert AVIF to PNG"/>
+
+Can't or don't want to support AVIF? Do you require a JPG? No problem. Several online and offline converters exist. Convertico, Cloudconvert allows you to convert your images online. In contrast, programs like Filestar and ImageMagick or libraries like Sharp and the Squoosh CLI allow conversion offline from AVIF to JPG.
+
+## How do I convert AVIF to PNG
+
+Related question: <Link href="#howdoiconvertaviftojpg" text="Convert AVIF to JPG"/>
+
+Can't or don't want to support AVIF? Do you need a PNG? No problem. Several online and offline converters exist. Convertico, Cloudconvert allows you to convert your images online. In contrast, programs like Filestar and ImageMagick or libraries like Sharp and the Squoosh CLI allow conversion offline from AVIF to PNG.
+
+## ⏩ WORKING WITH AVIF
+
+## How do I make an AVIF file
+
+Related question: <Link href="#howdoiconverttoavif" text="Convert to AVIF"/>
+
+Suppose by making, you mean exporting an image in AVIF format. In that case, you can use any graphics editing program supporting AVIF. The complete list of graphics software can be found here. To convert your JPEGs to AVIF, you can use the above listed offline and online converters and libraries.
+
+## Should I use AVIF
+
+Related article: <Link href="/blog/articles/optimize-images-for-web-performance/" text="Image Optimization Guide"/>
+
+AVIF is an excellent choice for any web-related project involving images. The AVIF image codec was developed as a free alternative to JPEG, PNG, and WebP. It offers better compression efficiency and more features than those formats. Numerous browsers support it, including Chrome, Opera, and Firefox. Many prominent websites use AVIF, including Vimeo, Etsy, and Cloudflare. With every passing day, adoption rates continue to increase due to many parties working together to develop their products. AVIF is already available to 70 percent of all web users.
+
+## How can I use AVIF in a web environment
+
+Related article: <Link href="/blog/tutorials/html/" text="AVIF in HTML"/>
+
+You can integrate AVIF images into your website today. Due to AVIF's relative newness and the fact it is not yet fully supported by all browsers, it is best implemented using content negotiation, aka the HTML 5 &lt;picture&gt; and &lt;source&gt; tags. It requires HTML code to integrate AVIF into websites to replace the standard JPEG. This is accomplished by using the HTML tag &lt;picture&gt;. In other words, it stores several image sources (&lt;sources&gt;) for a single image (&lt;img&gt;). As a fallback option for browsers which cannot display WebP or AVIF images, the lowest image element is readout. This allows you to specify a version of the image supported by all major browsers, a JPEG image.
+
+## How do I view an AVIF file
+
+Related article: <Link href="/blog/" text="AVIF image viewer overview"/>
+
+AVIF files can be opened in several ways. About 70% of browsers can decode them. By dragging the image into your browser, you will be able to view the AVIF image. The Windows 10 Operating System supports AVIF images through an add-on. For more information, <Link href="/blog/tutorials/windows/" text="refer to our Windows 10 guide"/>. Our comprehensive list of all image and graphics editing programs supporting AVIF can be viewed for other operating systems. The following image viewers and editors support AVIF in part or in full:
+
+- <Link href="/blog/tutorials/gimp/" text="GIMP" />
+- <Link href="/blog/tutorials/gthumb/" text="gThumb" />
+- <Link href="/blog/tutorials/imageglass/" text="Imageglass" />
+- <Link href="/blog/tutorials/irfanview/" text="IrfanView (partial)" />
+- <Link href="/blog/tutorials/nomacs/" text="nomacs" />
+- <Link href="/blog/tutorials/paintnet/" text="Paintnet" />
+- <Link href="/blog/tutorials/photopea/" text="Photopea" />
+- <Link href="/blog/tutorials/pixelmator/" text="Pixelmator" />
+- <Link href="/blog/tutorials/quicklook/" text="QuickLook (partial)" />
+- <Link href="/blog/tutorials/qview/" text="qView" />
+- <Link href="/blog/tutorials/vlc/" text="VLC" />
+- <Link href="/blog/tutorials/xnview/" text="XnView" />
+
+For a daily updated list, view our "can-i-use" styled tutorials overview blog page.
+
+## ⏩ AVIF GENERAL SUPPORT
+
+## Is AVIF supported
+
+Related article: <Link href="/blog/" text="Full Support Overview (150+ software)"/>
+
+AVIF is relatively new compared to the popular JPEG format, which has been around since the early 1990s. It is yet to be tested in the real world. This makes predicting its future difficult. As a result of its many advantages, its chances of being implemented nationally are good.
+
+Since the image format and video codec are still under development, further optimizations may be made in the future, such as improving playback quality and reducing file sizes. Through code optimizations, the hardware demands should be reduced.
+
+## What type of software and services support AVIF
+
+Related question: <Link href="#whatbrowserssupportavif" text="What browsers support AVIF"/>
+
+AVIF images are not supported by all browsers at this time. However, this technology was developed by some of the largest companies in the world, which means there is a high probability they will use it in their products first while also encouraging others like Microsoft or Apple to do likewise. The adoption of these files across different platforms can be expected to increase when standards are established for how they are handled on mobile devices and computers alike in the future. If your website is hosted on a platform supporting this new image format, you can take advantage of it!
+
+## What browsers support AVIF
+
+Related article: <Link href="/blog/" text="Overview of all browser support"/>
+
+AVIF image file formats are supported by Mozilla Firefox 93+, Google Chrome 85+. At the time of writing, Microsoft Edge isn't supported. Still, since it uses the same Chromium engine as Google Chrome, it won't be long before support is available. However, Microsoft users can download the AV1 Extension add-on from the Microsoft Store. Installing this add-on will support Edge and Windows 10 devices.
+
+Safari - the browser used by Apple devices such as iPhones - doesn't currently support AVIF. Although they took ten years to add WebP support, they will be much faster this time around since they are members of the same group who created AV1.
+
+## Do smartphone browsers support AVIF
+
+Related question: <Link href="#whatbrowserssupportavif" text="What browsers support AVIF"/>
+
+Some smartphone browsers already support AVIF:
+
+- <Link href="/blog/tutorials/samsunginternet/" text="Samsung Internet" /> (v14+)
+- <Link href="/blog/tutorials/opera/" text="Opera Mobile" /> (v64+)
+- <Link href="/blog/tutorials/chrome/" text="Chrome for Android" /> (v94+)
+- <Link href="/blog/tutorials/androidbrowser/" text="Android Browser" /> (v94+)
+
+## Which OS supports AVIF
+
+Related article: <Link href="/blog/" text="Full Overview of AVIF Support for OS"/>
+
+AVIF files can be converted in the Paint program of Windows 10 using the new image format. You can install the AV1 Video Extension from the Microsoft store for free. You can open AVIF files in Windows and save images in the format (e.g., for a website). You can also view and edit photos in the format with various programs. GIMP has supported the AVIF format since version 2.10.22. In addition, the free video player VLC has supported the new image format since version 33. Android 12 will support AVIF as well. The Apple ecosystem does not yet support native image viewers for macOS, but several image viewers are available. Using another operating system, you can convert AVIF into another image file format using online converters. Check out our support page for a daily updated list.
+
+## What software supports AVIF
+
+Related question: <Link href="#whattypeofsoftwareandservicessupportavif" text="What type of software and services support AVIF"/>
+
+The following software provides AVIF support. Visit the tutorial page overview for a daily updated list.
+
+Several browsers already support AVIF and power around 70% of all web users:
+
+- <Link href="/blog/tutorials/androidbrowser/" text="Android Browser" /> (since 23th
+  of September 2021, version 94)
+- <Link href="/blog/tutorials/brave/" text="Brave" />
+- <Link href="/blog/tutorials/chrome/" text="Chrome" /> (since 15 September 2020,
+  version 85)
+- <Link href="/blog/tutorials/firefox/" text="Firefox" /> (since 5 October 2021,
+  version 93)
+- <Link href="/blog/tutorials/opera/" text="Opera" /> (since 15 September 2020, version
+
+71.
+
+- <Link href="/blog/tutorials/samsunginternet/" text="Samsung Internet" /> (since
+  16 April, version 14)
+- <Link href="/blog/tutorials/vivaldi/" text="Vivaldi" />
+
+Several graphics editing programs have AVIF support, including Emulsion, GIMP, gThumb, Imageglass, IrfanView, nomacs, Paintnet, Photopea, Pixelmator, qView, VLC, and XnView.
+
+## What mail clients support AVIF
+
+Related article: <Link href="/blog/" text="AVIF Mail client support full overview"/>
+
+AVIF is not supported by many mail programs. Attaching AVIF is not an issue. However, viewing them inline isn't supported. Viewing AVIF images inline is possible through these programs:
+
+- <Link href="/blog/tutorials/outlook/" text="Outlook" />
+- <Link href="/blog/tutorials/thunderbird/" text="Thunderbird" />
+- <Link href="/blog/tutorials/yahoomail/" text="Yahoo Mail" />
+
+## What online services support AVIF
+
+Related article: <Link href="/blog/" text="Online services AVIF support full overview"/>
+
+Netflix is a pioneer of the new technology and is currently testing AVIF to convert the platform's user interface from SDR to HDR (e.g., to enhance previews). The format will be introduced gradually, with usage extending overtime on a growing number of content and platforms.
+
+## What CDNs support AVIF
+
+Related article: <Link href="/blog/" text="CDN AVIF support full overview"/>
+
+Fortunately, several CDNs have already committed to supporting AVIF so you can serve dynamic AVIF images to your web app users. CDNs supporting AVIF include:
+
+- <Link href="/blog/tutorials/cloudflare/" text="Cloudflare" />
+- <Link href="/blog/tutorials/cloudimage/" text="Cloudimage" />
+- <Link href="/blog/tutorials/cloudinary/" text="Cloudinary" />
+- <Link href="/blog/tutorials/fastly/" text="Fastly" />
+- <Link href="/blog/tutorials/gumlet/" text="Gumlet" />
+- <Link href="/blog/tutorials/imageengine/" text="ImageEngine" />
+- <Link href="/blog/tutorials/imagekit/" text="Imagekit" />
+- <Link href="/blog/tutorials/imghaste/" text="ImgHaste" />
+- <Link href="/blog/tutorials/peakhour/" text="Peakhour" />
+- <Link href="/blog/tutorials/pixboost/" text="Pixboost" />
+- <Link href="/blog/tutorials/shimmercat/" text="ShimmerCat" />
+- <Link href="/blog/tutorials/shortpixel/" text="ShortPixel" />
+- <Link href="/blog/tutorials/twicpics/" text="TwicPics" />
+
+For a daily updated list, please visit the tutorials overview.
+
+## ⏩ AVIF SPECIFIC SUPPORT
+
+## How do I open an AVIF file on mac
+
+Related question: <Link href="#whichossupportsavif" text="Which OS supports AVIF"/>
+
+Apple devices do not yet support AVIF. In addition to AVIF compliant browsers like Chrome, Opera, and Firefox, you can also open AVIF files by using a plugin for Mac QuickLook or using a third-party image viewer like VLC, XnView, or nomacs.
+
+## Does Android support AVIF
+
+Related question: <Link href="#whichossupportsavif" text="Which OS supports AVIF"/>
+
+The Android 11 operating system does not support AVIF. Android 12's first preview reveals the mobile operating system will support the AV1 Image File Format. AVIF will be supported in Android 12, but Google does not intend to make it the default image format like Apple did with HEIF and iOS 11.
+
+## Does WordPress support AVIF
+
+Related article: <Link href="/blog/tutorials/wordpress/" text="Detailed Wordpress AVIF Guide"/>
+
+AVIF is not supported by WordPress. Since WebP has recently been implemented, even though it is more than a decade old, we should not expect fast support from WP core. You should use an Image CDN to benefit from AVIF.

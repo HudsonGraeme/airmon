@@ -1,0 +1,51 @@
+---
+title: ImageMagick AVIF support
+description: ImageMagick is a free and open-source cross-platform software suite for images.
+keyword: ImageMagick
+subcategory: coding
+support: full
+datePublished: 2022-04-14
+dateModified: 2022-04-14
+sources:
+  - github.com/ImageMagick/ImageMagick/discussions/2388
+  - github.com/ImageMagick/ImageMagick/issues/1432
+  - darekkay.com/blog/avif-images/
+  - imagemagick.org/script/formats.php
+  - www.tempertemper.net/blog/converting-images-to-avif-in-2021
+  - www.smashingmagazine.com/2021/09/modern-image-formats-avif-webp/
+  - stackoverflow.com/questions/65765174/convert-png-images-to-lossy-avif
+  - en.wikipedia.org/wiki/AVIF
+tags:
+  - avif
+  - image format
+  - av1 image file format
+  - imagemagick
+questions:
+  - Does ImageMagick support AVIF?
+---
+
+## What is AVIF
+
+You can build a website with many different image formats, such as GIF, BMP, JPEG, PNG, TIFF, JPEG 2000, JPEG XR, SVG, WebP, and AVIF. Which image formats offer the best performance and quality when choosing a website? Multiple options for next-generation image formats can benefit, but it often complicates planning and coding. The decision of when, how, and which image format to use has become increasingly challenging. Developers must consider the tradeoff between optimizing for quality, image payload size (and speed of loading), and code complexity. Additionally, each new format makes the process of analyzing tradeoffs more challenging. AVIF is a format that offers better compression, better image quality, and more features than traditional formats such as JPEG, PNG, GIF, and even the relatively new WebP.
+
+## What is ImageMagick
+
+This cross-platform software suite displays, creates, converts, and edits raster images. John Cristy developed it in 1987, and it can read and write more than 200 image formats. Several open-source applications use it. The software is a set of command-line utilities for manipulating images. Although ImageMagick lacks the robust GUI of Adobe Photoshop and GIMP, it does include an essential native X Window GUI (called IMDisplay) for rendering and manipulating images and API libraries for most programming languages. ImageMagick can create image thumbnails if installed in several programs, including Drupal, MediaWiki, phpBB, and vBulletin.
+
+ImageMagick is also used in many programs, such as LyX, to convert images. It has a Perl binding called PerlMagick, as well as Gold2F (Ada), MagickWand for PHP (PHP), IMagick for PHP (PHP), and PythonMagick for PHP (PHP), RMagick for PHP (Ruby), and TclMagick for Tcl/TK. ImageMagick is particularly well-known for its capability to convert images between different formats efficiently and accurately (this is accomplished using the command convert). ImageMagick runs on a wide range of operating systems, including Microsoft Windows, Linux, macOS, iOS, Android, Solaris, Haiku, and FreeBSD. There is also source code for AmigaOS 4.0 and MorphOS that can be compiled, and IRIX has been used.
+
+## ImageMagick supports AVIF
+
+ImageMagick supports AVIF. As ofversion 7.0.25, it supports AVIF compression natively.
+
+You can use a command like:
+
+magick -quality 80 test.jpg test.avif
+
+"-define" allows you to specify additional AVIF settings. You can substitute the generic quality parameter with the heic:speed option to improve your results: For example:
+
+magick -define heic:speed=2 test.jpg test.avif
+
+## ImageMagick Docker
+
+Dmitry Pokidov published a repo that allows you to run the latest version of imagemagick inside a docker container. Delivers the latest ImageMagick 7 version to your environment as a Docker image. The purpose of the image is to provide a stable Linux environment with support for modern web formats with ImageMagick 7.

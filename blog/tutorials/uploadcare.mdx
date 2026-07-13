@@ -1,0 +1,56 @@
+---
+title: Uploadcare AVIF support
+description: Image CDNs help you serve the best image to users. Find out how you can use AVIF images in Uploadcare.
+keyword: Uploadcare
+subcategory: cdn
+support: full
+datePublished: 2022-07-08
+dateModified: 2022-07-08
+sources:
+  - wikipedia.org/wiki/AVIF
+  - uploadcare.com/
+  - uploadcare.com/docs/transformations/image/#formats
+  - stackshare.io/uploadcare
+tags:
+  - avif
+  - image processing format
+  - cdn
+  - content delivery network
+  - uploadcare
+questions:
+  - Does Uploadcare support AVIF?
+  - Which CDN supports AVIF?
+---
+
+## What is AVIF
+
+File compression is necessary to free up network infrastructure resources.
+AVIF aims to improve data traffic efficiency and replace the widely used JPEG format in the long term.
+Compared to JPEG, AVIF offers better quality and compression.
+There is interest in introducing a new image format among data that you can compress losslessly and lossy.
+In addition, AVIF supports extended color spaces (wide color gamut, WCG) and features such as graininess, chroma subsampling, and HDR (high dynamic range).
+
+Chrome, Opera, Firefox, and other browsers support AVIF.
+
+## What is Uploadcare
+
+Uploadcare offers file uploading, media processing & content delivery for modern web apps.
+
+Alongside an image editor, you can receive files from your users via the File Uploader or File Upload API, implement image optimization and transformations with Image CDN API, and get HIPAA-compliant storage.
+
+## Uploadcare supports AVIF
+
+Uploadcare Image processing pipeline now supports AVIF images as a source.
+Processed images could also be served as AVIF using the `-/format/auto/` operation if a client supports this and the image meets some circumstances.
+
+### Example code
+
+<Syntax language="html">
+  {`<img srcset="https://ucarecdn.com/f70b3810-1f72-4ad3-97c9-fd1c9c24db6f/-/format/auto/-/resize/240x/ 240w,
+             https://ucarecdn.com/f70b3810-1f72-4ad3-97c9-fd1c9c24db6f/-/format/auto/-/resize/400x/ 400w,
+             https://ucarecdn.com/f70b3810-1f72-4ad3-97c9-fd1c9c24db6f/-/format/auto/-/resize/480x/-/quality/lightest/ 480w,
+             https://ucarecdn.com/f70b3810-1f72-4ad3-97c9-fd1c9c24db6f/-/format/auto/-/resize/800x/-/quality/lightest/ 800w"
+    sizes="(max-width: 820px) 240px, 400px"
+    src="https://ucarecdn.com/f70b3810-1f72-4ad3-97c9-fd1c9c24db6f/-/resize/400x/"
+    alt="Mountain lake">`}
+</Syntax>

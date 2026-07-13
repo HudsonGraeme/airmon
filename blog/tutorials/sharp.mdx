@@ -1,0 +1,77 @@
+---
+title: "Sharp NodeJS AVIF Tutorial"
+description: Learn how to use NodeJS image library sharp to create AVIF images.
+keyword: Sharp
+subcategory: coding
+support: full
+datePublished: 2022-03-02
+dateModified: 2022-03-03
+sources:
+  - sharp.pixelplumbing.com/api-output#avif
+  - github.com/lovell/sharp
+  - github.com/lovell/sharp/issues/2346
+  - www.jameslmilner.com/post/node-avif/
+  - blog.logrocket.com/processing-images-sharp-node-js/
+  - www.digitalocean.com/community/tutorials/how-to-process-images-in-node-js-with-sharp
+  - nextjs.org/docs/messages/sharp-version-avi
+tags:
+  - sharp avif
+  - avif support
+  - image format
+  - nodejs module
+  - responsive images
+  - sharp
+  - avif file
+  - modern image format
+  - avif encoding
+  - image optimization
+questions:
+  - Does Sharp support AVIF?
+  - How to process images to AVIF?
+  - Do Node.JS modules exist that support AVIF?
+  - How to support AVIF conversion with NODEJS?
+  - What image library supports AVIF?
+---
+
+## What is AVIF?
+
+AV1 Image File Format specifies a file format for storing images or sequences of images that have been compressed with AV1 in HEIF containers
+
+With AVIF, you can reduce the size of lossy images considerably compared with JPEG or even Google's WebP format.
+
+Compared to JPEG as a baseline, Daniel Aleksandersen found a median reduction of 50.3% in file size, compared to WebP's 31.5% reduction.
+
+In comparing a photograph of an F1 car, Jake Archibald found that WebP was 57.7% of the size, and AVIF was an impressive 18.2%.
+
+## What is sharp?
+
+You can use an ecosystem of libraries in Node.js to process images. This article focuses on the sharp module.
+
+Sharp is a Node.js image processing library that can process images in various formats, including JPEG, PNG, WebP, and SVG.
+
+A typical use of this high-speed Node.js module is to convert large images in popular formats into smaller, web-friendly JPEG, PNG, WebP, GIF, and AVIF images of varying sizes.
+
+sharp is a Node.js module that provides high-performance image processing. This module assists with UGC management by providing an easy solution for reading, enhancing, and saving image files. Sharp compresses images more quickly and produces better results than most Node.js modules, such as ImageMagick, Jimp, and Squoosh.
+
+Due to utilizing libvips, **resizing an image is 4x-5x faster than using the fastest ImageMagick and GraphicsMagick settings.**
+
+The system holds small portions of uncompressed image data in memory. It processes them simultaneously, taking full advantage of multiple CPU cores and L1/L2/L3 cache.
+
+Color spaces, embedded ICC profiles, and alpha transparency channels are correctly handled. The Lanczos resampling ensures that quality is not sacrificed for speed.
+
+In addition to image resizing, the application offers rotation, extraction, compositing, and gamma correction operations.
+
+You can find complete installation instructions, API documentation, benchmark tests, and a changelog at <Link href="sharp.pixelplumbing.com" text="sharp.pixelplumbing.com"/>. If you're looking for tutorials on using sharp, you can check out their FAQ section or this tutorial on <Link href="blog.logrocket.com/processing-images-sharp-node-js/" text="LogRocket"/>.
+
+## Sharp supports AVIF
+
+**In July 2020, Sharp added support for AVIF.**
+
+Although AVIF images smaller than 16x16 pixels can be created, most web browsers can't display them correctly. It isn't possible to create AVIF image sequences.
+
+**The following options are available:**
+
+- Quality: Change quality, integer from 1-100
+- Lossless: Use lossless compression, boolean
+- Effort: CPU effort, integer between 0 (fastest) and 9 (slowest)
+- ChromaSubsampling: Set custom subsampling, string input
