@@ -15,6 +15,45 @@ import (
 // Polite, identifiable UA so station operators can see who we are.
 const userAgent = "airmon/0.2 (open radio airplay monitor; +https://github.com/HudsonGraeme/avif.io)"
 
+// fetchMode declares how an adapter's output should be deduplicated. It lives with
+// the adapter (not the station) because it's a property of the upstream feed.
+type fetchMode int
+
+const (
+	// modeTimestamped: the feed returns a timestamped recent-history window, so we
+	// keep everything strictly newer than the per-station cursor. Deeper
+	// history_fetch closes the gap when polls slip.
+	modeTimestamped fetchMode = iota
+	// modeCurrent: the feed returns only the current track with no server time, so
+	// we stamp with poll time and collapse unchanged repeats via last_key.
+	modeCurrent
+)
+
+// adapter is one source type. Register a new broadcaster feed by adding an entry
+// to the registry below — no changes to the main loop required.
+type adapter struct {
+	fetch func(st Station, eff Strategy) ([]Spin, error)
+	mode  fetchMode
+}
+
+// registry maps a station's "adapter" key to its implementation.
+var registry = map[string]adapter{
+	"triton":  {fetch: fetchTritonAdapter, mode: modeTimestamped},
+	"streamb": {fetch: fetchStreamBAdapter, mode: modeCurrent},
+}
+
+func fetchTritonAdapter(st Station, eff Strategy) ([]Spin, error) {
+	n := eff.HistoryFetch
+	if n <= 0 {
+		n = 10
+	}
+	return fetchTriton(st, n)
+}
+
+func fetchStreamBAdapter(st Station, _ Strategy) ([]Spin, error) {
+	return fetchStreamB(st)
+}
+
 var httpClient = &http.Client{Timeout: 15 * time.Second}
 
 func httpGet(u string) ([]byte, error) {

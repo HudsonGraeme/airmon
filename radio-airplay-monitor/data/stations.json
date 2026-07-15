@@ -1,5 +1,9 @@
 {
-  "triton_history_fetch": 10,
+  "defaults": {
+    "history_fetch": 20,
+    "max_retries": 2,
+    "retry_backoff_ms": 500
+  },
   "stations": [
     {
       "id": "chum-1045",
@@ -17,7 +21,8 @@
       "owner": "Bell Media / iHeartRadio Canada",
       "format": "CHR / Top 40",
       "adapter": "triton",
-      "mount": "CKFMFMAAC"
+      "mount": "CKFMFMAAC",
+      "strategy": { "history_fetch": 30 }
     },
     {
       "id": "virgin-959-montreal",
@@ -26,7 +31,8 @@
       "owner": "Bell Media / iHeartRadio Canada",
       "format": "CHR / Top 40",
       "adapter": "triton",
-      "mount": "CJFMFMAAC"
+      "mount": "CJFMFMAAC",
+      "strategy": { "history_fetch": 30 }
     },
     {
       "id": "chom-977-montreal",
@@ -44,7 +50,8 @@
       "owner": "Bell Media / iHeartRadio Canada",
       "format": "CHR / Top 40",
       "adapter": "triton",
-      "mount": "CFBTFMAAC"
+      "mount": "CFBTFMAAC",
+      "strategy": { "history_fetch": 30 }
     },
     {
       "id": "z1035-toronto",
@@ -53,7 +60,8 @@
       "owner": "Evanov Communications",
       "format": "Rhythmic / Dance CHR",
       "adapter": "streamb",
-      "url": "https://evanov.streamb.online/Z1035-CIDC-3087791499/nowplaying"
+      "url": "https://evanov.streamb.online/Z1035-CIDC-3087791499/nowplaying",
+      "strategy": { "max_retries": 4 }
     }
   ],
   "analysis": {

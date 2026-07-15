@@ -8,7 +8,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"path/filepath"
 	"sort"
@@ -32,13 +31,23 @@ func main() {
 
 	total := 0
 	for _, st := range cfg.Stations {
-		spins, err := fetchStation(st, cfg)
+		eff := cfg.resolve(st)
+		if !eff.enabled() {
+			log.Printf("%-22s skipped (disabled)", st.ID)
+			continue
+		}
+		ad, ok := registry[st.Adapter]
+		if !ok {
+			log.Printf("WARN %-22s unknown adapter %q", st.ID, st.Adapter)
+			continue
+		}
+		spins, err := fetchStation(ad, st, eff)
 		if err != nil {
 			log.Printf("WARN %-22s %v", st.ID, err) // one flaky station must not abort the run
 			continue
 		}
 		ss := state[st.ID]
-		fresh := newSpins(st, spins, &ss)
+		fresh := newSpins(ad.mode, spins, &ss)
 		if len(fresh) > 0 {
 			if err := store.Append(fresh); err != nil {
 				log.Printf("WARN %-22s append: %v", st.ID, err)
@@ -56,28 +65,31 @@ func main() {
 	log.Printf("done: %d new spins at %s", total, time.Now().UTC().Format(time.RFC3339))
 }
 
-func fetchStation(st Station, cfg *Config) ([]Spin, error) {
-	switch st.Adapter {
-	case "triton":
-		n := st.HistoryFetch
-		if n == 0 {
-			n = cfg.TritonHistoryFetch
-		}
-		if n == 0 {
-			n = 10
-		}
-		return fetchTriton(st, n)
-	case "streamb":
-		return fetchStreamB(st)
-	default:
-		return nil, fmt.Errorf("unknown adapter %q", st.Adapter)
+// fetchStation runs an adapter with the station's retry strategy, so a transient
+// network blip doesn't cost a whole poll interval of spins.
+func fetchStation(ad adapter, st Station, eff Strategy) ([]Spin, error) {
+	attempts := eff.MaxRetries + 1
+	if attempts < 1 {
+		attempts = 1
 	}
+	var lastErr error
+	for i := 0; i < attempts; i++ {
+		if i > 0 && eff.RetryBackoffMs > 0 {
+			time.Sleep(time.Duration(eff.RetryBackoffMs*i) * time.Millisecond)
+		}
+		spins, err := ad.fetch(st, eff)
+		if err == nil {
+			return spins, nil
+		}
+		lastErr = err
+	}
+	return nil, lastErr
 }
 
 // newSpins filters a fetch down to genuinely new spins and advances the cursor.
-func newSpins(st Station, spins []Spin, ss *StationState) []Spin {
+func newSpins(mode fetchMode, spins []Spin, ss *StationState) []Spin {
 	var fresh []Spin
-	if st.Adapter == "streamb" {
+	if mode == modeCurrent {
 		// current-track only: append when it differs from the last stored track
 		for _, sp := range spins {
 			key := normKey(sp.Artist, sp.Title)

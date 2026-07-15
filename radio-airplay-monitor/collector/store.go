@@ -8,22 +8,72 @@ import (
 	"time"
 )
 
+// Strategy is the set of per-station capture knobs. Every field is optional and
+// resolved by precedence (built-in defaults < config "defaults" < a station's own
+// "strategy"), so a station only names what it needs to override. The goal of the
+// knobs is data completeness: fetch deep enough that a slipping poll interval
+// never drops spins, and retry transient failures rather than losing a whole poll.
+type Strategy struct {
+	HistoryFetch   int   `json:"history_fetch,omitempty"`    // timestamped adapters: rows to pull per poll
+	MaxRetries     int   `json:"max_retries,omitempty"`      // extra attempts after the first on fetch error
+	RetryBackoffMs int   `json:"retry_backoff_ms,omitempty"` // base backoff between attempts (scales per attempt)
+	Enabled        *bool `json:"enabled,omitempty"`          // nil/true = polled; false = skipped this run
+}
+
+// builtinStrategy is the last-resort fallback when neither the config "defaults"
+// nor a station's "strategy" set a field.
+var builtinStrategy = Strategy{HistoryFetch: 10, MaxRetries: 2, RetryBackoffMs: 500}
+
+// merge overlays any set (non-zero / non-nil) field of over onto base.
+func (base Strategy) merge(over Strategy) Strategy {
+	if over.HistoryFetch > 0 {
+		base.HistoryFetch = over.HistoryFetch
+	}
+	if over.MaxRetries > 0 {
+		base.MaxRetries = over.MaxRetries
+	}
+	if over.RetryBackoffMs > 0 {
+		base.RetryBackoffMs = over.RetryBackoffMs
+	}
+	if over.Enabled != nil {
+		base.Enabled = over.Enabled
+	}
+	return base
+}
+
+func (s Strategy) enabled() bool { return s.Enabled == nil || *s.Enabled }
+
 // Station is one monitored broadcast station.
 type Station struct {
-	ID           string `json:"id"`
-	Name         string `json:"name"`
-	Market       string `json:"market"`
-	Owner        string `json:"owner"`
-	Format       string `json:"format"`
-	Adapter      string `json:"adapter"`           // "triton" | "streamb"
-	Mount        string `json:"mount,omitempty"`   // triton mount name
-	URL          string `json:"url,omitempty"`     // streamb endpoint
-	HistoryFetch int    `json:"history_fetch,omitempty"`
+	ID      string `json:"id"`
+	Name    string `json:"name"`
+	Market  string `json:"market"`
+	Owner   string `json:"owner"`
+	Format  string `json:"format"`
+	Adapter string `json:"adapter"`         // registry key, e.g. "triton" | "streamb"
+	Mount   string `json:"mount,omitempty"` // triton mount name
+	URL     string `json:"url,omitempty"`   // streamb endpoint
+
+	Strategy     *Strategy `json:"strategy,omitempty"`      // per-station overrides
+	HistoryFetch int       `json:"history_fetch,omitempty"` // deprecated: use strategy.history_fetch
+}
+
+// resolve computes the effective strategy for a station.
+func (cfg *Config) resolve(st Station) Strategy {
+	eff := builtinStrategy.merge(cfg.Defaults)
+	if st.HistoryFetch > 0 { // back-compat with the old top-level field
+		eff.HistoryFetch = st.HistoryFetch
+	}
+	if st.Strategy != nil {
+		eff = eff.merge(*st.Strategy)
+	}
+	return eff
 }
 
 // Config is data/stations.json.
 type Config struct {
-	TritonHistoryFetch int       `json:"triton_history_fetch"`
+	Defaults           Strategy  `json:"defaults"`
+	TritonHistoryFetch int       `json:"triton_history_fetch,omitempty"` // deprecated: use defaults.history_fetch
 	Stations           []Station `json:"stations"`
 	Analysis           struct {
 		Focus    []string `json:"focus"`
@@ -55,6 +105,10 @@ func loadConfig(path string) (*Config, error) {
 	var c Config
 	if err := json.Unmarshal(b, &c); err != nil {
 		return nil, err
+	}
+	// Fold the deprecated top-level field into defaults if defaults is unset.
+	if c.Defaults.HistoryFetch == 0 && c.TritonHistoryFetch > 0 {
+		c.Defaults.HistoryFetch = c.TritonHistoryFetch
 	}
 	return &c, nil
 }

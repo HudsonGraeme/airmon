@@ -62,6 +62,42 @@ double-count. Runs automatically via [`.github/workflows/collect-airplay.yml`](.
 > once this is merged to `master`. Use the workflow's **Run workflow** button to
 > test it from a branch.
 
+### Configuration & per-station strategy
+
+`data/stations.json` drives the collector. To **add a station**, append an object
+with an `id`, display fields, an `adapter`, and that adapter's locator (`mount`
+for `triton`, `url` for `streamb`).
+
+Capture behaviour is tuned with a **strategy**, resolved by precedence —
+built-in defaults **<** the config `defaults` block **<** a station's own
+`strategy`, so a station only names what it overrides:
+
+```jsonc
+{
+  "defaults": { "history_fetch": 20, "max_retries": 2, "retry_backoff_ms": 500 },
+  "stations": [
+    // fast CHR rotation: pull deeper so a slipping cron never drops a spin
+    { "id": "virgin-999-toronto", "adapter": "triton", "mount": "CKFMFMAAC",
+      "strategy": { "history_fetch": 30 } },
+    // current-only feed: no history to fetch, so lean on retries instead
+    { "id": "z1035-toronto", "adapter": "streamb", "url": "…",
+      "strategy": { "max_retries": 4 } }
+  ]
+}
+```
+
+| Strategy key | Applies to | Effect on capture |
+|---|---|---|
+| `history_fetch` | timestamped adapters (`triton`) | rows pulled per poll; raise it so gaps between polls don't lose spins |
+| `max_retries` | all | extra attempts on a failed fetch so one blip doesn't cost a whole interval |
+| `retry_backoff_ms` | all | base delay between attempts (scales per attempt) |
+| `enabled` | all | set `false` to park a station without deleting it |
+
+To add a whole new **source type**, register an adapter in
+[`collector/adapters.go`](collector/adapters.go) (its `fetch` func plus a
+`fetchMode` — `modeTimestamped` or `modeCurrent`); the main loop picks it up by
+its `adapter` key with no further changes.
+
 ## Frontend (Cloudflare Pages)
 
 ```bash
