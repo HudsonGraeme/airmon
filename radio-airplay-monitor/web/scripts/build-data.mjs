@@ -1,6 +1,6 @@
 // Consolidates the git-stored NDJSON spin log (../data) into static JSON the
 // frontend loads: spins.json (for Orama search + table), stations.json, and
-// meta.json (aggregate stats + the focus-vs-peers rotation analysis).
+// meta.json (aggregate airplay stats).
 //
 // No dependencies — plain Node ESM. Runs as a pre-build step (see package.json).
 
@@ -22,16 +22,9 @@ function normArtist(s) {
   if (s.startsWith("the ")) s = s.slice(4);
   return s;
 }
-const median = (xs) => {
-  if (!xs.length) return 0;
-  const a = [...xs].sort((p, q) => p - q);
-  const m = a.length >> 1;
-  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
-};
-
 function loadStations() {
   const p = join(DATA, "stations.json");
-  if (!existsSync(p)) return { stations: [], analysis: { focus: [], controls: [] } };
+  if (!existsSync(p)) return { stations: [] };
   return JSON.parse(readFileSync(p, "utf8"));
 }
 
@@ -78,47 +71,14 @@ const topArtists = [...artistCounts.entries()]
   .sort((a, b) => b.spins - a.spins)
   .slice(0, 40);
 
-// --- rotation analysis: focus vs matched-era peers, per station ---
-const focus = new Set((cfg.analysis?.focus || []).map(normArtist));
-const controls = new Set((cfg.analysis?.controls || []).map(normArtist));
-
-const perStationArtist = {}; // stationId -> normArtist -> count
-for (const sp of spins) {
-  (perStationArtist[sp.s] ||= {});
-  const k = normArtist(sp.a);
-  perStationArtist[sp.s][k] = (perStationArtist[sp.s][k] || 0) + 1;
-}
-
-const rotationByStation = stations.map((st) => {
-  const counts = perStationArtist[st.id] || {};
-  let focusSpins = 0;
-  for (const f of focus) focusSpins += counts[f] || 0;
-  const peer = [...controls].map((c) => counts[c] || 0).filter((n) => n > 0);
-  const peerMedian = median(peer);
-  const total = perStation[st.id] || 0;
-  return {
-    station: st.id,
-    name: st.name,
-    focusSpins,
-    focusShare: total ? +(focusSpins / total).toFixed(4) : 0,
-    peerMedian,
-    peersPresent: peer.length,
-    index: peerMedian ? +(focusSpins / peerMedian).toFixed(2) : null,
-  };
-});
-
 const meta = {
   generatedAt: new Date().toISOString(),
   totalSpins: spins.length,
   stationCount: stations.length,
+  artistCount: artistCounts.size,
   dateRange: spins.length ? [minAt, maxAt] : null,
   perStation: stations.map((s) => ({ id: s.id, name: s.name, spins: perStation[s.id] || 0 })),
   topArtists,
-  rotation: {
-    focus: cfg.analysis?.focus || [],
-    controls: cfg.analysis?.controls || [],
-    byStation: rotationByStation,
-  },
 };
 
 mkdirSync(OUT, { recursive: true });

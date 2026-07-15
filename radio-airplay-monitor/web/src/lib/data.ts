@@ -15,23 +15,14 @@ export interface Station {
   format: string;
   adapter: string;
 }
-export interface RotationRow {
-  station: string;
-  name: string;
-  focusSpins: number;
-  focusShare: number;
-  peerMedian: number;
-  peersPresent: number;
-  index: number | null;
-}
 export interface Meta {
   generatedAt: string;
   totalSpins: number;
   stationCount: number;
+  artistCount: number;
   dateRange: [number, number] | null;
   perStation: { id: string; name: string; spins: number }[];
   topArtists: { norm: string; artist: string; spins: number }[];
-  rotation: { focus: string[]; controls: string[]; byStation: RotationRow[] };
 }
 
 const schema = {

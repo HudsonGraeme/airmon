@@ -5,10 +5,9 @@ when, on which station* — collected from broadcasters' own public now-playing
 endpoints, stored in-repo (git-as-database), and surfaced through a Cloudflare
 Pages frontend with instant client-side search.
 
-Deliberately **multi-broadcaster and multi-artist**: a general public resource,
-not a dossier on one target. Any sharper question ("is artist X over-rotated?") is
-*one query on top of the open data* — clearly labelled as interpretation, see
-[`METHODOLOGY.md`](METHODOLOGY.md).
+A **multi-broadcaster, multi-artist** public resource: every track on every
+monitored station is logged and searchable, with per-station and per-artist
+aggregates. No station or artist is singled out — it's a general airplay record.
 
 > **Facts, not audio.** airmon reads the short "now playing" text metadata
 > stations already publish. It does **not** record, store, or redistribute audio.
@@ -125,17 +124,11 @@ spins). For much larger logs, chunk the spin file or persist a prebuilt index.
 1. Find its public now-playing endpoint (many use Triton's
    `np.tritondigital.com/public/nowplaying?mountName=…`; others expose a small
    JSON/XML feed like Evanov's StreamB).
-2. Reuse an adapter if the shape matches, or add a `fetchX` in
-   `collector/adapters.go` and a `case` in `fetchStation`.
-3. Add the station to `data/stations.json`.
-
-## Analysis & responsibility
-
-The rotation panel compares a focus artist against matched-era peers per station.
-**Read [`METHODOLOGY.md`](METHODOLOGY.md) before quoting any number** — a high
-index is *consistent with* mundane causes and does not prove coordination;
-correlation with an external timeline is a question, not evidence; anything under
-~a week of data, or that doesn't replicate across independent owners, is noise.
+2. Reuse an adapter if the shape matches, or register a new one in
+   `collector/adapters.go` (a `fetch` func plus its `fetchMode`); the main loop
+   picks it up by the station's `adapter` key.
+3. Add the station to `data/stations.json` (see *Configuration & per-station
+   strategy* above).
 
 ## Roadmap — audio fingerprinting
 

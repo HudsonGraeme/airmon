@@ -63,9 +63,5 @@
       "url": "https://evanov.streamb.online/Z1035-CIDC-3087791499/nowplaying",
       "strategy": { "max_retries": 4 }
     }
-  ],
-  "analysis": {
-    "focus": ["Katy Perry"],
-    "controls": ["Rihanna", "Lady Gaga", "Taylor Swift", "Maroon 5", "Bruno Mars", "Pink", "Kesha"]
-  }
+  ]
 }

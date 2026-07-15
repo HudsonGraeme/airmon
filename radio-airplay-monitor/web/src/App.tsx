@@ -20,13 +20,11 @@ import {
   StatNumber,
   Table,
   TableContainer,
-  Tag,
   Tbody,
   Td,
   Text,
   Th,
   Thead,
-  Tooltip,
   Tr,
   VStack,
   useColorMode,
@@ -38,7 +36,6 @@ import {
   type Dataset,
   type Spin,
 } from "./lib/data";
-import { viz } from "./theme";
 
 const fmtTime = (at: number) =>
   new Date(at * 1000).toLocaleString(undefined, {
@@ -98,7 +95,6 @@ export function App() {
       <Container maxW="6xl" py={8}>
         <VStack align="stretch" spacing={8}>
           <Overview data={data} cardBg={cardBg} border={border} subtle={subtle} />
-          <Rotation data={data} cardBg={cardBg} border={border} subtle={subtle} />
           <Box>
             <Heading size="md" mb={3}>
               Search spins
@@ -186,8 +182,6 @@ function Overview({ data, cardBg, border, subtle }: PanelProps) {
   const windowDays = meta.dateRange
     ? (meta.dateRange[1] - meta.dateRange[0]) / 86400
     : 0;
-  const focusLabel = meta.rotation.focus[0] ?? "focus";
-  const focusTotal = meta.rotation.byStation.reduce((n, r) => n + r.focusSpins, 0);
   const rangeLabel = meta.dateRange
     ? `${fmtTime(meta.dateRange[0])} → ${fmtTime(meta.dateRange[1])}`
     : "—";
@@ -195,16 +189,16 @@ function Overview({ data, cardBg, border, subtle }: PanelProps) {
   return (
     <VStack align="stretch" spacing={4}>
       {windowDays < 7 && (
-        <Alert status="warning" rounded="md" fontSize="sm">
+        <Alert status="info" rounded="md" fontSize="sm">
           <AlertIcon />
-          Only {windowDays.toFixed(1)} days of data so far — rotation figures are
-          noise until the log spans several weeks and replicates across owners.
+          Only {windowDays.toFixed(1)} days of data so far — early aggregates are a
+          small sample and will settle as the log grows.
         </Alert>
       )}
       <SimpleGrid columns={{ base: 2, md: 4 }} spacing={4}>
-        <StatCard label="Total spins" value={meta.totalSpins.toLocaleString()} cardBg={cardBg} border={border} />
+        <StatCard label="Total spins" value={meta.totalSpins.toLocaleString()} cardBg={cardBg} border={border} accent />
         <StatCard label="Stations" value={String(meta.stationCount)} cardBg={cardBg} border={border} />
-        <StatCard label={`${focusLabel} spins`} value={focusTotal.toLocaleString()} cardBg={cardBg} border={border} accent />
+        <StatCard label="Artists" value={meta.artistCount.toLocaleString()} cardBg={cardBg} border={border} />
         <StatCard label="Window" value={`${windowDays.toFixed(1)}d`} help={rangeLabel} cardBg={cardBg} border={border} />
       </SimpleGrid>
       <Text fontSize="xs" color={subtle}>
@@ -238,78 +232,6 @@ function StatCard(props: {
       </StatNumber>
       {props.help && <StatHelpText fontSize="xs" mb={0}>{props.help}</StatHelpText>}
     </Stat>
-  );
-}
-
-function Rotation({ data, cardBg, border, subtle }: PanelProps) {
-  const { rotation } = data.meta;
-  const focusLabel = rotation.focus[0] ?? "focus";
-  const maxIndex = Math.max(1.5, ...rotation.byStation.map((r) => r.index ?? 0));
-
-  return (
-    <Box>
-      <Heading size="md" mb={1}>
-        Rotation index — {focusLabel} vs matched-era peers
-      </Heading>
-      <Text fontSize="sm" color={subtle} mb={3}>
-        {focusLabel} spins ÷ median peer spins per station. 1× = played like a
-        typical peer; above 1× = heavier rotation. Peers: {rotation.controls.join(", ")}.
-      </Text>
-      <TableContainer bg={cardBg} borderWidth="1px" borderColor={border} rounded="lg">
-        <Table size="sm" variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Station</Th>
-              <Th isNumeric>{focusLabel}</Th>
-              <Th isNumeric>Share</Th>
-              <Th isNumeric>Peer median</Th>
-              <Th>Index</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {rotation.byStation.map((r) => (
-              <Tr key={r.station}>
-                <Td>{r.name}</Td>
-                <Td isNumeric>{r.focusSpins}</Td>
-                <Td isNumeric>{(r.focusShare * 100).toFixed(1)}%</Td>
-                <Td isNumeric>{r.peerMedian || "—"}</Td>
-                <Td>
-                  <IndexBar index={r.index} max={maxIndex} />
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
-      <Text fontSize="xs" color={subtle} mt={2}>
-        A high index is <b>consistent with</b> ordinary causes (format fit, promotion,
-        a topical artist) and does not prove coordination. See the methodology doc.
-      </Text>
-    </Box>
-  );
-}
-
-function IndexBar({ index, max }: { index: number | null; max: number }) {
-  if (index == null)
-    return (
-      <Text as="span" color="gray.500" fontSize="sm">
-        no peers yet
-      </Text>
-    );
-  const above = index > 1;
-  const color = above ? viz.peers : viz.focus;
-  const pct = Math.min(100, (index / max) * 100);
-  return (
-    <Tooltip label={above ? "above peer norm" : "at/below peer norm"}>
-      <HStack spacing={2}>
-        <Box w="90px" h="8px" bg="blackAlpha.200" rounded="full" overflow="hidden">
-          <Box w={`${pct}%`} h="100%" bg={color} />
-        </Box>
-        <Tag size="sm" bg={color} color="white" minW="44px" justifyContent="center">
-          {index}×
-        </Tag>
-      </HStack>
-    </Tooltip>
   );
 }
 
@@ -375,11 +297,11 @@ function Footer({ subtle, border }: { subtle: string; border: string }) {
     <Box borderTopWidth="1px" borderColor={border} mt={8}>
       <Container maxW="6xl" py={6}>
         <Text fontSize="xs" color={subtle}>
-          airmon publishes airplay <b>facts</b> and its methodology so anyone can
-          verify claims independently. No audio is recorded or served. The dataset
-          takes no editorial position; any interpretation is the analyst's.{" "}
-          <Link href="https://github.com/HudsonGraeme/avif.io/tree/master/radio-airplay-monitor" color="brand.400" isExternal>
-            Source &amp; methodology
+          airmon publishes open airplay <b>facts</b> — what played, when, on which
+          station — so anyone can verify them independently. No audio is recorded or
+          served, and the dataset takes no editorial position.{" "}
+          <Link href="https://github.com/HudsonGraeme/airmon/tree/main/radio-airplay-monitor" color="brand.400" isExternal>
+            Source
           </Link>
           .
         </Text>

@@ -75,10 +75,6 @@ type Config struct {
 	Defaults           Strategy  `json:"defaults"`
 	TritonHistoryFetch int       `json:"triton_history_fetch,omitempty"` // deprecated: use defaults.history_fetch
 	Stations           []Station `json:"stations"`
-	Analysis           struct {
-		Focus    []string `json:"focus"`
-		Controls []string `json:"controls"`
-	} `json:"analysis"`
 }
 
 // Spin is one logged play. Field names are short because we store millions of

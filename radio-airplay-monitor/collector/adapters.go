@@ -13,7 +13,7 @@ import (
 )
 
 // Polite, identifiable UA so station operators can see who we are.
-const userAgent = "airmon/0.2 (open radio airplay monitor; +https://github.com/HudsonGraeme/avif.io)"
+const userAgent = "airmon/0.2 (open radio airplay monitor; +https://github.com/HudsonGraeme/airmon)"
 
 // fetchMode declares how an adapter's output should be deduplicated. It lives with
 // the adapter (not the station) because it's a property of the upstream feed.

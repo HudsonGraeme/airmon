@@ -5,14 +5,6 @@ const config: ThemeConfig = {
   useSystemColorMode: true,
 };
 
-// Brand accent doubles as the categorical "focus" hue in the data panels
-// (validated dataviz blue). Peer baseline uses orange; both defined here so the
-// charts and the UI share one source of truth.
-export const viz = {
-  focus: "#2a78d6",
-  peers: "#eb6834",
-};
-
 export const theme = extendTheme({
   config,
   fonts: {
