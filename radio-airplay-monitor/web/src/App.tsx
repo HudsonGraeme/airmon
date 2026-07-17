@@ -157,7 +157,6 @@ function Dashboard({ data }: { data: Dataset }) {
   }, [scoped]);
 
   const stationName = useMemo(() => (id: string) => idToName.get(id) ?? id, [idToName]);
-  const windowDays = maxAt && minAt ? (maxAt - minAt) / 86400 : 0;
   const feeds = data.meta.feeds ?? [];
   const healthRef = data.meta.healthRef || maxAt;
 
@@ -170,13 +169,6 @@ function Dashboard({ data }: { data: Dataset }) {
             <Section>
               <FeedHealth feeds={feeds} refAt={healthRef} />
             </Section>
-          )}
-
-          {windowDays < 7 && (
-            <Alert status="info" fontSize="sm" bg={SX.panel} borderWidth="1px" borderColor={SX.line} color={SX.dim} borderRadius="4px">
-              <AlertIcon color={SX.accent} />
-              {windowDays.toFixed(1)} days of data so far — early aggregates are a small sample.
-            </Alert>
           )}
 
           {/* control bar */}
