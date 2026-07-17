@@ -73,14 +73,15 @@ built-in defaults **<** the config `defaults` block **<** a station's own
 
 ```jsonc
 {
-  "defaults": { "history_fetch": 20, "max_retries": 2, "retry_backoff_ms": 500 },
+  "defaults": { "history_fetch": 30, "max_retries": 2, "retry_backoff_ms": 500 },
   "stations": [
     // fast CHR rotation: pull deeper so a slipping cron never drops a spin
     { "id": "virgin-999-toronto", "adapter": "triton", "mount": "CKFMFMAAC",
-      "strategy": { "history_fetch": 30 } },
-    // current-only feed: no history to fetch, so lean on retries instead
+      "strategy": { "history_fetch": 40 } },
+    // current-only feed: no history, so sample repeatedly across the run to
+    // catch the track changes a single poll would miss
     { "id": "z1035-toronto", "adapter": "streamb", "url": "…",
-      "strategy": { "max_retries": 4 } }
+      "strategy": { "max_retries": 4, "sample_window_s": 300, "sample_every_s": 20 } }
   ]
 }
 ```
@@ -88,9 +89,17 @@ built-in defaults **<** the config `defaults` block **<** a station's own
 | Strategy key | Applies to | Effect on capture |
 |---|---|---|
 | `history_fetch` | timestamped adapters (`triton`) | rows pulled per poll; raise it so gaps between polls don't lose spins |
+| `sample_window_s` | current-track adapters (`streamb`) | keep re-sampling for this long each run to catch the songs between polls (0 = one poll) |
+| `sample_every_s` | current-track adapters | interval between samples within the window |
 | `max_retries` | all | extra attempts on a failed fetch so one blip doesn't cost a whole interval |
 | `retry_backoff_ms` | all | base delay between attempts (scales per attempt) |
 | `enabled` | all | set `false` to park a station without deleting it |
+
+Each run also records per-station poll outcomes to `data/health.json`
+(`last_poll_at`, `last_ok_at`, `last_spin_at`, `consec_fails`); the build folds
+these into `meta.feeds` and the UI shows a live **feed-health** board
+(nominal / stale / down). A poll that can't distinguish "quiet feed" from "dead
+feed" from spin data alone is why the collector records the outcome directly.
 
 To add a whole new **source type**, register an adapter in
 [`collector/adapters.go`](collector/adapters.go) (its `fetch` func plus a

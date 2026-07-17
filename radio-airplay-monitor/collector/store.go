@@ -17,12 +17,14 @@ type Strategy struct {
 	HistoryFetch   int   `json:"history_fetch,omitempty"`    // timestamped adapters: rows to pull per poll
 	MaxRetries     int   `json:"max_retries,omitempty"`      // extra attempts after the first on fetch error
 	RetryBackoffMs int   `json:"retry_backoff_ms,omitempty"` // base backoff between attempts (scales per attempt)
+	SampleWindowS  int   `json:"sample_window_s,omitempty"`  // current-track adapters: keep sampling for this many seconds per run
+	SampleEveryS   int   `json:"sample_every_s,omitempty"`   // interval between samples within the window
 	Enabled        *bool `json:"enabled,omitempty"`          // nil/true = polled; false = skipped this run
 }
 
 // builtinStrategy is the last-resort fallback when neither the config "defaults"
 // nor a station's "strategy" set a field.
-var builtinStrategy = Strategy{HistoryFetch: 10, MaxRetries: 2, RetryBackoffMs: 500}
+var builtinStrategy = Strategy{HistoryFetch: 10, MaxRetries: 2, RetryBackoffMs: 500, SampleEveryS: 20}
 
 // merge overlays any set (non-zero / non-nil) field of over onto base.
 func (base Strategy) merge(over Strategy) Strategy {
@@ -34,6 +36,12 @@ func (base Strategy) merge(over Strategy) Strategy {
 	}
 	if over.RetryBackoffMs > 0 {
 		base.RetryBackoffMs = over.RetryBackoffMs
+	}
+	if over.SampleWindowS > 0 {
+		base.SampleWindowS = over.SampleWindowS
+	}
+	if over.SampleEveryS > 0 {
+		base.SampleEveryS = over.SampleEveryS
 	}
 	if over.Enabled != nil {
 		base.Enabled = over.Enabled

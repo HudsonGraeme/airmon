@@ -1,6 +1,6 @@
 {
   "defaults": {
-    "history_fetch": 20,
+    "history_fetch": 30,
     "max_retries": 2,
     "retry_backoff_ms": 500
   },
@@ -22,7 +22,9 @@
       "format": "CHR / Top 40",
       "adapter": "triton",
       "mount": "CKFMFMAAC",
-      "strategy": { "history_fetch": 30 }
+      "strategy": {
+        "history_fetch": 40
+      }
     },
     {
       "id": "virgin-959-montreal",
@@ -32,7 +34,9 @@
       "format": "CHR / Top 40",
       "adapter": "triton",
       "mount": "CJFMFMAAC",
-      "strategy": { "history_fetch": 30 }
+      "strategy": {
+        "history_fetch": 40
+      }
     },
     {
       "id": "chom-977-montreal",
@@ -51,7 +55,9 @@
       "format": "CHR / Top 40",
       "adapter": "triton",
       "mount": "CFBTFMAAC",
-      "strategy": { "history_fetch": 30 }
+      "strategy": {
+        "history_fetch": 40
+      }
     },
     {
       "id": "z1035-toronto",
@@ -61,7 +67,11 @@
       "format": "Rhythmic / Dance CHR",
       "adapter": "streamb",
       "url": "https://evanov.streamb.online/Z1035-CIDC-3087791499/nowplaying",
-      "strategy": { "max_retries": 4 }
+      "strategy": {
+        "max_retries": 4,
+        "sample_window_s": 300,
+        "sample_every_s": 20
+      }
     }
   ]
 }

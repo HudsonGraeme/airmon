@@ -28,6 +28,16 @@ function loadStations() {
   return JSON.parse(readFileSync(p, "utf8"));
 }
 
+function loadHealth() {
+  const p = join(DATA, "health.json");
+  if (!existsSync(p)) return {};
+  try {
+    return JSON.parse(readFileSync(p, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
 function loadSpins() {
   const dir = join(DATA, "spins");
   if (!existsSync(dir)) return [];
@@ -48,16 +58,19 @@ function loadSpins() {
 
 const cfg = loadStations();
 const stations = cfg.stations || [];
+const health = loadHealth();
 const spins = loadSpins();
 
 // --- aggregates ---
 const perStation = {};
+const lastSpinAt = {};
 const artistCounts = new Map(); // norm -> { display, spins }
 let minAt = Infinity;
 let maxAt = 0;
 
 for (const sp of spins) {
   perStation[sp.s] = (perStation[sp.s] || 0) + 1;
+  if (sp.at > (lastSpinAt[sp.s] || 0)) lastSpinAt[sp.s] = sp.at;
   const key = normArtist(sp.a);
   const cur = artistCounts.get(key) || { display: sp.a, spins: 0 };
   cur.spins++;
@@ -71,13 +84,42 @@ const topArtists = [...artistCounts.entries()]
   .sort((a, b) => b.spins - a.spins)
   .slice(0, 40);
 
+// --- per-station feed health ---
+// Reference clock is the collector's most recent poll (health is baked at build
+// time and can be hours old, so viewer-clock staleness would be misleading).
+const ref = Math.max(0, ...Object.values(health).map((h) => h.last_poll_at || 0), maxAt);
+const HOUR = 3600;
+function feedStatus(h, spinsCount) {
+  if (!h || !h.last_poll_at) return spinsCount > 0 ? "unknown" : "down";
+  if ((h.consec_fails || 0) >= 2) return "down";
+  if (h.last_ok_at && ref - h.last_ok_at > 3 * HOUR) return "down";
+  if (h.last_ok_at && ref - h.last_ok_at <= 2 * HOUR) return "ok";
+  return "stale";
+}
+const feeds = stations.map((s) => {
+  const h = health[s.id] || {};
+  return {
+    id: s.id,
+    name: s.name,
+    market: s.market,
+    adapter: s.adapter,
+    spins: perStation[s.id] || 0,
+    lastSpinAt: lastSpinAt[s.id] || h.last_spin_at || 0,
+    lastOkAt: h.last_ok_at || 0,
+    fails: h.consec_fails || 0,
+    status: feedStatus(h, perStation[s.id] || 0),
+  };
+});
+
 const meta = {
   generatedAt: new Date().toISOString(),
   totalSpins: spins.length,
   stationCount: stations.length,
   artistCount: artistCounts.size,
   dateRange: spins.length ? [minAt, maxAt] : null,
+  healthRef: ref,
   perStation: stations.map((s) => ({ id: s.id, name: s.name, spins: perStation[s.id] || 0 })),
+  feeds,
   topArtists,
 };
 

@@ -13,13 +13,27 @@ export interface Station {
   format: string;
   adapter: string;
 }
+export type FeedStatus = "ok" | "stale" | "down" | "unknown";
+export interface Feed {
+  id: string;
+  name: string;
+  market: string;
+  adapter: string;
+  spins: number;
+  lastSpinAt: number;
+  lastOkAt: number;
+  fails: number;
+  status: FeedStatus;
+}
 export interface Meta {
   generatedAt: string;
   totalSpins: number;
   stationCount: number;
   artistCount: number;
   dateRange: [number, number] | null;
+  healthRef?: number;
   perStation: { id: string; name: string; spins: number }[];
+  feeds?: Feed[];
   topArtists: { norm: string; artist: string; spins: number }[];
 }
 

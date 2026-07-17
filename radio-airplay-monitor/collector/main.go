@@ -27,6 +27,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("load state: %v", err)
 	}
+	healthPath := filepath.Join(*dataDir, "health.json")
+	health := loadHealth(healthPath)
 	store := NewStore(*dataDir)
 
 	total := 0
@@ -41,13 +43,19 @@ func main() {
 			log.Printf("WARN %-22s unknown adapter %q", st.ID, st.Adapter)
 			continue
 		}
-		spins, err := fetchStation(ad, st, eff)
-		if err != nil {
-			log.Printf("WARN %-22s %v", st.ID, err) // one flaky station must not abort the run
+
+		ss := state[st.ID]
+		fresh, perr := poll(ad, st, eff, &ss)
+
+		h := health[st.ID]
+		h.record(time.Now().Unix(), perr, ss.MaxAt)
+		health[st.ID] = h
+		state[st.ID] = ss
+
+		if perr != nil {
+			log.Printf("WARN %-22s %v", st.ID, perr) // one flaky station must not abort the run
 			continue
 		}
-		ss := state[st.ID]
-		fresh := newSpins(ad.mode, spins, &ss)
 		if len(fresh) > 0 {
 			if err := store.Append(fresh); err != nil {
 				log.Printf("WARN %-22s append: %v", st.ID, err)
@@ -56,13 +64,58 @@ func main() {
 			log.Printf("%-22s +%d", st.ID, len(fresh))
 			total += len(fresh)
 		}
-		state[st.ID] = ss
 	}
 
 	if err := saveState(statePath, state); err != nil {
 		log.Fatalf("save state: %v", err)
 	}
+	if err := saveHealth(healthPath, health); err != nil {
+		log.Printf("WARN save health: %v", err)
+	}
 	log.Printf("done: %d new spins at %s", total, time.Now().UTC().Format(time.RFC3339))
+}
+
+// poll fetches a station and returns its genuinely-new spins, advancing the
+// cursor. Current-track feeds expose only the song playing right now, so a single
+// hourly poll captures ~1 of their dozen songs/hour; when a sample window is
+// configured we keep re-sampling across the window to catch the changes in
+// between. Timestamped feeds already return recent history, so one fetch suffices.
+func poll(ad adapter, st Station, eff Strategy, ss *StationState) ([]Spin, error) {
+	if ad.mode == modeCurrent && eff.SampleWindowS > 0 {
+		every := eff.SampleEveryS
+		if every <= 0 {
+			every = 20
+		}
+		samples := eff.SampleWindowS / every
+		if samples < 1 {
+			samples = 1
+		}
+		var all []Spin
+		var lastErr error
+		gotOne := false
+		for i := 0; i <= samples; i++ {
+			if i > 0 {
+				time.Sleep(time.Duration(every) * time.Second)
+			}
+			spins, err := fetchStation(ad, st, eff)
+			if err != nil {
+				lastErr = err
+				continue
+			}
+			gotOne = true
+			all = append(all, newSpins(ad.mode, spins, ss)...)
+		}
+		if !gotOne {
+			return nil, lastErr // every sample failed → report the feed as down
+		}
+		return all, nil
+	}
+
+	spins, err := fetchStation(ad, st, eff)
+	if err != nil {
+		return nil, err
+	}
+	return newSpins(ad.mode, spins, ss), nil
 }
 
 // fetchStation runs an adapter with the station's retry strategy, so a transient
