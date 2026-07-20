@@ -61,7 +61,7 @@ export function TimelineBars({
   viz: Viz;
 }) {
   const nameOf = new Map(stations.map((s) => [s.id, s.name]));
-  const color = (i: number) => viz.categorical[i % viz.categorical.length];
+  const color = (i: number, id: string) => (id === "__other" ? viz.other : viz.categorical[i % viz.categorical.length]);
 
   const tip = ({ active, payload, label }: TipProps) => {
     if (!active || !payload || !payload.length) return null;
@@ -104,7 +104,7 @@ export function TimelineBars({
         <Tooltip content={tip} cursor={{ fill: viz.grid, fillOpacity: 0.35 }} />
         <Legend iconType="square" iconSize={9} wrapperStyle={{ fontSize: 11, color: viz.ink }} formatter={(v) => nameOf.get(String(v)) ?? String(v)} />
         {stations.map((s, i) => (
-          <Bar key={s.id} dataKey={s.id} stackId="a" fill={color(i)} isAnimationActive={false} maxBarSize={40}>
+          <Bar key={s.id} dataKey={s.id} stackId="a" fill={color(i, s.id)} isAnimationActive={false} maxBarSize={40}>
             {rows.map((r) => (
               <Cell key={r.t} fillOpacity={r.partial ? 0.35 : 1} />
             ))}

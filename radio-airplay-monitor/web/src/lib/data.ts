@@ -8,6 +8,7 @@ export interface Spin {
 export interface Station {
   id: string;
   name: string;
+  short?: string;
   market: string;
   owner: string;
   format: string;

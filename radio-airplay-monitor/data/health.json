@@ -1,38 +1,92 @@
 {
   "chom-977-montreal": {
-    "last_poll_at": 1784590201,
-    "last_ok_at": 1784590201,
-    "last_spin_at": 1784589555,
+    "last_poll_at": 1784591091,
+    "last_ok_at": 1784591091,
+    "last_spin_at": 1784590879,
     "consec_fails": 0
   },
   "chum-1045": {
-    "last_poll_at": 1784590201,
-    "last_ok_at": 1784590201,
-    "last_spin_at": 1784590147,
+    "last_poll_at": 1784591090,
+    "last_ok_at": 1784591090,
+    "last_spin_at": 1784590898,
+    "consec_fails": 0
+  },
+  "rythme-1029-quebec": {
+    "last_poll_at": 1784591405,
+    "last_ok_at": 1784591405,
+    "last_spin_at": 1784591087,
     "consec_fails": 0
   },
   "the-beat-945-vancouver": {
-    "last_poll_at": 1784590201,
-    "last_ok_at": 1784590201,
-    "last_spin_at": 1784590112,
+    "last_poll_at": 1784591091,
+    "last_ok_at": 1784591091,
+    "last_spin_at": 1784591017,
     "consec_fails": 0
   },
-  "virgin-959-montreal": {
-    "last_poll_at": 1784590201,
-    "last_ok_at": 1784590201,
-    "last_spin_at": 1784590135,
+  "rouge-1073-montreal": {
+    "last_poll_at": 1784591405,
+    "last_ok_at": 1784591405,
+    "last_spin_at": 1784590887,
+    "consec_fails": 0
+  },
+  "virgin-1073-victoria": {
+    "last_poll_at": 1784591405,
+    "last_ok_at": 1784591405,
+    "last_spin_at": 1784591341,
+    "consec_fails": 0
+  },
+  "virgin-975-london": {
+    "last_poll_at": 1784591405,
+    "last_ok_at": 1784591405,
+    "last_spin_at": 1784591179,
+    "consec_fails": 0
+  },
+  "energie-943-montreal": {
+    "last_poll_at": 1784591405,
+    "last_ok_at": 1784591405,
+    "last_spin_at": 1784591385,
+    "consec_fails": 0
+  },
+  "virgin-1053-kitchener": {
+    "last_poll_at": 1784591405,
+    "last_ok_at": 1784591405,
+    "last_spin_at": 1784591426,
+    "consec_fails": 0
+  },
+  "cjay-92-calgary": {
+    "last_poll_at": 1784591405,
+    "last_ok_at": 1784591405,
+    "last_spin_at": 1784590824,
     "consec_fails": 0
   },
   "virgin-999-toronto": {
-    "last_poll_at": 1784590201,
-    "last_ok_at": 1784590201,
-    "last_spin_at": 1784590078,
+    "last_poll_at": 1784591090,
+    "last_ok_at": 1784591090,
+    "last_spin_at": 1784590807,
+    "consec_fails": 0
+  },
+  "pure-country-94-ottawa": {
+    "last_poll_at": 1784591405,
+    "last_ok_at": 1784591405,
+    "last_spin_at": 1784591195,
+    "consec_fails": 0
+  },
+  "virgin-959-montreal": {
+    "last_poll_at": 1784591091,
+    "last_ok_at": 1784591091,
+    "last_spin_at": 1784590864,
     "consec_fails": 0
   },
   "z1035-toronto": {
-    "last_poll_at": 1784590508,
-    "last_ok_at": 1784590508,
-    "last_spin_at": 1784590202,
+    "last_poll_at": 1784591404,
+    "last_ok_at": 1784591404,
+    "last_spin_at": 1784591341,
+    "consec_fails": 0
+  },
+  "energie-989-quebec": {
+    "last_poll_at": 1784591405,
+    "last_ok_at": 1784591405,
+    "last_spin_at": 1784591202,
     "consec_fails": 0
   }
 }

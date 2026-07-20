@@ -155,7 +155,10 @@ export interface SimMatrix {
   topPair?: { a: number; b: number; v: number };
   outlier?: { i: number; avg: number };
 }
-export function stationSimilarity(spins: Spin[], stations: { id: string; name: string }[]): SimMatrix {
+export function stationSimilarity(
+  spins: Spin[],
+  stations: { id: string; name: string; short?: string }[]
+): SimMatrix {
   const vecs = new Map<string, Map<string, number>>();
   for (const sp of spins) {
     const key = normArtist(sp.a) + "|" + sp.t.trim().toLowerCase();
@@ -165,7 +168,7 @@ export function stationSimilarity(spins: Spin[], stations: { id: string; name: s
   }
   const active = stations.filter((s) => vecs.has(s.id));
   const n = active.length;
-  const short = active.map((s) => s.name.match(/[\d.]+/)?.[0] ?? s.name.slice(0, 4));
+  const short = active.map((s) => s.short ?? s.name.match(/[\d.]+/)?.[0] ?? s.name.slice(0, 4));
   const norms = active.map((s) => {
     let sq = 0;
     for (const c of vecs.get(s.id)!.values()) sq += c * c;

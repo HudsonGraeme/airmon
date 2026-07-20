@@ -26,6 +26,7 @@ import {
   stationTimeSeries,
   topArtists,
   topSongs,
+  withOther,
   type Filters,
   type Slice,
   type Source,
@@ -132,14 +133,34 @@ function Dashboard({ data }: { data: Dataset }) {
     [data.spins, term, source, sinceDays, maxAt]
   );
 
-  const { stackRows, timeUnit } = useMemo(() => {
+  const { stackRows, timeUnit, timelineStations } = useMemo(() => {
     const start = sinceDays != null ? Math.max(minAt, maxAt - sinceDays * 86400) : minAt;
     const fmt = (t: number, unit: "hour" | "day" | "week") =>
       unit === "hour"
         ? new Date(t * 1000).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit" })
         : new Date(t * 1000).toLocaleDateString(undefined, { month: "short", day: "numeric" });
     const { rows, unit } = stationTimeSeries(scoped, start, maxAt, data.stations.map((s) => s.id), fmt);
-    return { stackRows: rows, timeUnit: unit };
+    // Stack only the busiest few stations by station colour; fold the rest into
+    // one "Other" series so the palette (8 hues) and legend stay legible.
+    const totals = new Map<string, number>();
+    for (const r of rows) for (const s of data.stations) totals.set(s.id, (totals.get(s.id) || 0) + Number(r[s.id] || 0));
+    const ranked = data.stations
+      .filter((s) => (totals.get(s.id) || 0) > 0)
+      .sort((a, b) => (totals.get(b.id) || 0) - (totals.get(a.id) || 0));
+    const TOP = 7;
+    const top = ranked.slice(0, TOP);
+    const topIds = new Set(top.map((s) => s.id));
+    const hasOther = ranked.length > TOP;
+    if (hasOther) {
+      for (const r of rows) {
+        let other = 0;
+        for (const s of data.stations) if (!topIds.has(s.id)) other += Number(r[s.id] || 0);
+        r.__other = other;
+      }
+    }
+    const series = top.map((s) => ({ id: s.id, name: s.name }));
+    if (hasOther) series.push({ id: "__other", name: "Other" });
+    return { stackRows: rows, timeUnit: unit, timelineStations: series };
   }, [scoped, sinceDays, minAt, maxAt, data.stations]);
 
   const artistBars = useMemo(() => topArtists(scoped, 12), [scoped]);
@@ -156,7 +177,7 @@ function Dashboard({ data }: { data: Dataset }) {
   const stationPie: Slice[] = useMemo(() => {
     const counts = perStationCounts(acrossStations, data.stations);
     const total = counts.reduce((n, c) => n + c.value, 0);
-    return counts.map((c) => ({ name: c.name, value: c.value, pct: total ? (c.value / total) * 100 : 0 }));
+    return withOther(counts.map((c) => ({ name: c.name, value: c.value })), 8, total);
   }, [acrossStations, data.stations]);
   const sim = useMemo(() => stationSimilarity(acrossStations, data.stations), [acrossStations, data.stations]);
 
@@ -247,7 +268,7 @@ function Dashboard({ data }: { data: Dataset }) {
           </SimpleGrid>
 
           <Panel title="Airplay over time" sub={`stacked by station · spins per ${timeUnit} · current period dimmed`}>
-            {scoped.length ? <TimelineBars rows={stackRows} stations={data.stations} viz={viz} /> : <Empty />}
+            {scoped.length ? <TimelineBars rows={stackRows} stations={timelineStations} viz={viz} /> : <Empty />}
           </Panel>
 
           <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={6}>
