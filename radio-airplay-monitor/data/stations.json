@@ -561,6 +561,164 @@
       "lat": 46.8139,
       "lon": -71.208,
       "prov": "QC"
+    },
+    {
+      "id": "rge-sag-saguenay",
+      "name": "Rouge FM 96.9",
+      "short": "RGE-SAG",
+      "market": "Saguenay",
+      "owner": "Bell Media",
+      "format": "French AC",
+      "adapter": "triton",
+      "mount": "CFIXFMAAC",
+      "lat": 48.4276,
+      "lon": -71.0335,
+      "prov": "QC"
+    },
+    {
+      "id": "rge-tr-trois-rivi-res",
+      "name": "Rouge FM 94.7",
+      "short": "RGE-TR",
+      "market": "Trois-Rivi\u00e8res",
+      "owner": "Bell Media",
+      "format": "French AC",
+      "adapter": "triton",
+      "mount": "CHEYFMAAC",
+      "lat": 46.3769,
+      "lon": -72.5383,
+      "prov": "QC"
+    },
+    {
+      "id": "pc-sud-sudbury",
+      "name": "Pure Country 91.7",
+      "short": "PC-SUD",
+      "market": "Sudbury",
+      "owner": "Bell Media",
+      "format": "Country",
+      "adapter": "triton",
+      "mount": "CICSFMAAC",
+      "lat": 46.5097,
+      "lon": -81.023,
+      "prov": "ON"
+    },
+    {
+      "id": "bnc-mid-midland",
+      "name": "Bounce 104.1",
+      "short": "BNC-MID",
+      "market": "Midland",
+      "owner": "Bell Media",
+      "format": "Adult Hits",
+      "adapter": "triton",
+      "mount": "CICZFMAAC",
+      "lat": 44.7259,
+      "lon": -79.9087,
+      "prov": "ON"
+    },
+    {
+      "id": "vr-wnd-windsor",
+      "name": "Virgin Radio 93.9",
+      "short": "VR-WND",
+      "market": "Windsor",
+      "owner": "Bell Media",
+      "format": "CHR / Top 40",
+      "adapter": "triton",
+      "mount": "CIDRFMAAC",
+      "lat": 42.284,
+      "lon": -83.02,
+      "prov": "ON",
+      "strategy": {
+        "history_fetch": 40
+      }
+    },
+    {
+      "id": "nrj-tr-trois-rivi-res",
+      "name": "\u00c9nergie 102.3",
+      "short": "NRJ-TR",
+      "market": "Trois-Rivi\u00e8res",
+      "owner": "Bell Media",
+      "format": "French CHR",
+      "adapter": "triton",
+      "mount": "CIGBFMAAC",
+      "lat": 46.3507,
+      "lon": -72.5135,
+      "prov": "QC",
+      "strategy": {
+        "history_fetch": 40
+      }
+    },
+    {
+      "id": "nrj-rn-rouyn-noranda",
+      "name": "\u00c9nergie 99.1",
+      "short": "NRJ-RN",
+      "market": "Rouyn-Noranda",
+      "owner": "Bell Media",
+      "format": "French CHR",
+      "adapter": "triton",
+      "mount": "CJMMFMAAC",
+      "lat": 48.2709,
+      "lon": -79.0212,
+      "prov": "QC",
+      "strategy": {
+        "history_fetch": 40
+      }
+    },
+    {
+      "id": "nrj-vd-val-d-or",
+      "name": "\u00c9nergie 102.7",
+      "short": "NRJ-VD",
+      "market": "Val-d'Or",
+      "owner": "Bell Media",
+      "format": "French CHR",
+      "adapter": "triton",
+      "mount": "CJMVFMAAC",
+      "lat": 48.1085,
+      "lon": -77.816,
+      "prov": "QC",
+      "strategy": {
+        "history_fetch": 40
+      }
+    },
+    {
+      "id": "nrj-gat-gatineau",
+      "name": "\u00c9nergie 104.1",
+      "short": "NRJ-GAT",
+      "market": "Gatineau",
+      "owner": "Bell Media",
+      "format": "French CHR",
+      "adapter": "triton",
+      "mount": "CKTFFMAAC",
+      "lat": 45.4475,
+      "lon": -75.7209,
+      "prov": "QC",
+      "strategy": {
+        "history_fetch": 40
+      }
+    },
+    {
+      "id": "bnc-bdn-brandon",
+      "name": "Bounce 96.1",
+      "short": "BNC-BDN",
+      "market": "Brandon",
+      "owner": "Bell Media",
+      "format": "Adult Hits",
+      "adapter": "triton",
+      "mount": "CKXFMAAC",
+      "lat": 49.8216,
+      "lon": -99.9274,
+      "prov": "MB"
+    },
+    {
+      "id": "htz-st-catharines",
+      "name": "HTZ-FM 97.7",
+      "short": "HTZ",
+      "market": "St. Catharines",
+      "owner": "Whiteoaks Communications Group",
+      "format": "Active Rock",
+      "adapter": "triton",
+      "mount": "CHTZFMAAC",
+      "lat": 43.1741,
+      "lon": -79.2151,
+      "prov": "ON"
     }
   ]
 }
