@@ -23,6 +23,12 @@ export function normArtist(input: string): string {
   return s;
 }
 
+// Canonical key for a song: normalized artist + lowercased title. Used anywhere
+// two spins of "the same song" must collapse (song detail pages, search, mixes).
+export function songKey(artist: string, title: string): string {
+  return normArtist(artist) + "|" + (title || "").trim().toLowerCase();
+}
+
 export function applyFilters(spins: Spin[], f: Filters, maxAt: number): Spin[] {
   const term = f.term.trim().toLowerCase();
   const cutoff = f.sinceDays != null ? maxAt - f.sinceDays * 86400 : -Infinity;
@@ -108,6 +114,31 @@ export function stationTimeSeries(
       row.total += c;
     }
     rows.push(row);
+  }
+  return { rows, unit };
+}
+
+// A single total-over-time series (one bar per bucket), for detail pages where
+// the subset spans many stations and we only want the overall shape. Emits the
+// count under the "value" column so it can feed TimelineBars as one series.
+export function totalTimeSeries(
+  spins: Spin[],
+  start: number,
+  end: number,
+  fmt: (t: number, unit: "hour" | "day" | "week") => string
+): { rows: StackRow[]; unit: "hour" | "day" | "week" } {
+  const { unit, stepSec } = bucketing(start, end);
+  const first = Math.floor(start / stepSec) * stepSec;
+  const lastStart = Math.floor(end / stepSec) * stepSec;
+  const counts = new Map<number, number>();
+  for (const sp of spins) {
+    const b = Math.floor(sp.at / stepSec) * stepSec;
+    counts.set(b, (counts.get(b) || 0) + 1);
+  }
+  const rows: StackRow[] = [];
+  for (let t = first; t <= end; t += stepSec) {
+    const c = counts.get(t) || 0;
+    rows.push({ label: fmt(t, unit), t, total: c, partial: t === lastStart, value: c });
   }
   return { rows, unit };
 }
@@ -236,6 +267,49 @@ export function topSongs(spins: Spin[], n: number): SongCount[] {
     .map((v) => ({ song: v.display, spins: v.spins }))
     .sort((a, b) => b.spins - a.spins)
     .slice(0, n);
+}
+
+// Keyed variants of the top-N lists: same ranking as topArtists/topSongs but they
+// carry the canonical key so detail pages can link each row to its own page.
+export interface RankedArtist {
+  key: string; // normArtist
+  display: string;
+  spins: number;
+}
+export function rankArtists(spins: Spin[], n?: number): RankedArtist[] {
+  const by = new Map<string, { display: string; spins: number }>();
+  for (const sp of spins) {
+    const k = normArtist(sp.a);
+    if (!k) continue;
+    const cur = by.get(k) || { display: sp.a, spins: 0 };
+    cur.spins++;
+    by.set(k, cur);
+  }
+  const out = [...by.entries()]
+    .map(([key, v]) => ({ key, display: v.display, spins: v.spins }))
+    .sort((a, b) => b.spins - a.spins);
+  return n != null ? out.slice(0, n) : out;
+}
+
+export interface RankedSong {
+  key: string; // songKey
+  display: string; // "Artist — Title"
+  artist: string;
+  title: string;
+  spins: number;
+}
+export function rankSongs(spins: Spin[], n?: number): RankedSong[] {
+  const by = new Map<string, { display: string; artist: string; title: string; spins: number }>();
+  for (const sp of spins) {
+    const k = songKey(sp.a, sp.t);
+    const cur = by.get(k) || { display: `${sp.a} — ${sp.t}`, artist: sp.a, title: sp.t, spins: 0 };
+    cur.spins++;
+    by.set(k, cur);
+  }
+  const out = [...by.entries()]
+    .map(([key, v]) => ({ key, display: v.display, artist: v.artist, title: v.title, spins: v.spins }))
+    .sort((a, b) => b.spins - a.spins);
+  return n != null ? out.slice(0, n) : out;
 }
 
 export interface Slice {

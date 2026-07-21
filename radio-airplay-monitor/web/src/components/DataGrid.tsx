@@ -41,9 +41,11 @@ const MAX_ROWS = 500;
 export function DataGrid({
   rows,
   stationName,
+  stationHref,
 }: {
   rows: Spin[];
   stationName: (id: string) => string;
+  stationHref?: (id: string) => string;
 }) {
   const [sortKey, setSortKey] = useState<Key>("at");
   const [dir, setDir] = useState<Dir>("desc");
@@ -119,7 +121,13 @@ export function DataGrid({
                   strong={c.key === "a"}
                   accent={c.key === "src"}
                 >
-                  {c.render(sp, stationName)}
+                  {c.key === "s" && stationHref ? (
+                    <Box as="a" href={stationHref(sp.s)} color={SX.dim} _hover={{ color: SX.accent, textDecoration: "underline" }}>
+                      {stationName(sp.s)}
+                    </Box>
+                  ) : (
+                    c.render(sp, stationName)
+                  )}
                 </Cell>
               ))}
             </Box>

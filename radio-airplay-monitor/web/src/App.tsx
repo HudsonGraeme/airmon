@@ -40,6 +40,9 @@ import { Compare } from "./components/Compare";
 import { Highlights } from "./components/Highlights";
 import { StationSimilarity } from "./components/StationSimilarity";
 import { MapPanel } from "./components/MapPanel";
+import { SearchBar } from "./components/SearchBar";
+import { StationPage, ArtistPage, SongPage } from "./components/pages";
+import { hrefFor, useRoute } from "./lib/router";
 
 const CDN_COMMERCIAL = 700; // ballpark commercial radio stations in Canada (CRTC-era est.)
 
@@ -85,7 +88,28 @@ export function App() {
       </Flex>
     );
 
-  return <Dashboard data={data} />;
+  return <Shell data={data} />;
+}
+
+// Shell owns the layout (header with global search + footer) and swaps the body
+// between the dashboard and the station/artist/song detail pages by route.
+function Shell({ data }: { data: Dataset }) {
+  const route = useRoute();
+  return (
+    <Box minH="100vh" bg={SX.page} overflowX="hidden">
+      <Header data={data} />
+      {route.name === "home" ? (
+        <Dashboard data={data} />
+      ) : (
+        <Container maxW="7xl" py={{ base: 5, md: 8 }} px={{ base: 3, md: 6 }}>
+          {route.name === "station" && <StationPage data={data} id={route.id} />}
+          {route.name === "artist" && <ArtistPage data={data} artistKey={route.key} />}
+          {route.name === "song" && <SongPage data={data} songKeyStr={route.key} />}
+        </Container>
+      )}
+      <Footer />
+    </Box>
+  );
 }
 
 // --- shared styling helpers -------------------------------------------------
@@ -200,10 +224,8 @@ function Dashboard({ data }: { data: Dataset }) {
   }, [data.stations]);
 
   return (
-    <Box minH="100vh" bg={SX.page} overflowX="hidden">
-      <Header />
-      <Container maxW="7xl" py={{ base: 5, md: 7 }} px={{ base: 3, md: 6 }}>
-        <VStack align="stretch" spacing={{ base: 6, md: 8 }}>
+    <Container maxW="7xl" py={{ base: 5, md: 7 }} px={{ base: 3, md: 6 }}>
+      <VStack align="stretch" spacing={{ base: 6, md: 8 }}>
           <Section>
             <Highlights spins={data.spins} stations={data.stations} maxAt={maxAt} />
           </Section>
@@ -344,33 +366,47 @@ function Dashboard({ data }: { data: Dataset }) {
                 sortable · {scoped.length.toLocaleString()} rows
               </Text>
             </Flex>
-            <DataGrid rows={scoped} stationName={stationName} />
+            <DataGrid
+              rows={scoped}
+              stationName={stationName}
+              stationHref={(sid) => hrefFor({ name: "station", id: sid })}
+            />
           </Section>
-        </VStack>
-      </Container>
-      <Footer />
-    </Box>
+      </VStack>
+    </Container>
   );
 }
 
-function Header() {
+function Header({ data }: { data: Dataset }) {
   return (
-    <Box as="header" borderBottomWidth="1px" borderColor={SX.line} bg={SX.page} position="sticky" top={0} zIndex={20} backdropFilter="blur(6px)">
+    <Box as="header" borderBottomWidth="1px" borderColor={SX.line} bg={SX.page} position="sticky" top={0} zIndex={30} backdropFilter="blur(6px)">
       <Container maxW="7xl" py={{ base: 3, md: 4 }} px={{ base: 3, md: 6 }}>
-        <Flex align="center" justify="space-between" gap={3} flexWrap="wrap">
-          <Flex align="center" gap={2.5}>
+        <Flex align="center" justify="space-between" gap={{ base: 3, md: 5 }} flexWrap="wrap">
+          <Flex
+            as="a"
+            href={hrefFor({ name: "home" })}
+            align="center"
+            gap={2.5}
+            flexShrink={0}
+            _hover={{ opacity: 0.85 }}
+          >
             <Box w="6px" h="6px" borderRadius="full" bg={SX.accent} />
             <Box>
               <Heading fontSize={{ base: "15px", md: "18px" }} letterSpacing={{ base: "0.18em", md: "0.28em" }} fontWeight={700}>
                 AIRMON
               </Heading>
-              <Text fontFamily={SX.mono} fontSize="11px" color={SX.dim} letterSpacing="0.12em">
+              <Text fontFamily={SX.mono} fontSize="11px" color={SX.dim} letterSpacing="0.12em" display={{ base: "none", sm: "block" }}>
                 CANADIAN RADIO AIRPLAY · TELEMETRY
               </Text>
             </Box>
           </Flex>
-          <HStack spacing={3}>
-            <Text fontFamily={SX.mono} fontSize="11px" color={SX.faint} letterSpacing="0.1em" display={{ base: "none", md: "block" }}>
+
+          <Box flex={{ base: "1 1 100%", md: "1 1 auto" }} order={{ base: 3, md: 2 }} maxW={{ md: "360px" }} ml={{ md: "auto" }}>
+            <SearchBar spins={data.spins} stations={data.stations} />
+          </Box>
+
+          <HStack spacing={3} order={{ base: 2, md: 3 }} flexShrink={0}>
+            <Text fontFamily={SX.mono} fontSize="11px" color={SX.faint} letterSpacing="0.1em" display={{ base: "none", lg: "block" }}>
               CC0 · METADATA-ONLY
             </Text>
             <Button
