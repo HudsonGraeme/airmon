@@ -41,6 +41,7 @@ import { Highlights } from "./components/Highlights";
 import { StationSimilarity } from "./components/StationSimilarity";
 import { MapPanel } from "./components/MapPanel";
 import { SearchBar } from "./components/SearchBar";
+import { LogoMark } from "./components/Logo";
 import { StationPage, ArtistPage, SongPage } from "./components/pages";
 import { hrefFor, useRoute } from "./lib/router";
 
@@ -81,7 +82,8 @@ export function App() {
   if (!data)
     return (
       <Flex h="100vh" align="center" justify="center" direction="column" gap={4} bg={SX.page}>
-        <Spinner size="lg" color={SX.accent} thickness="2px" />
+        <LogoMark size={44} />
+        <Spinner size="sm" color={SX.accent} thickness="2px" />
         <Text fontFamily={SX.mono} fontSize="sm" color={SX.dim} letterSpacing="0.1em">
           LOADING TELEMETRY…
         </Text>
@@ -390,10 +392,10 @@ function Header({ data }: { data: Dataset }) {
             flexShrink={0}
             _hover={{ opacity: 0.85 }}
           >
-            <Box w="6px" h="6px" borderRadius="full" bg={SX.accent} />
+            <LogoMark size={30} />
             <Box>
               <Heading fontSize={{ base: "15px", md: "18px" }} letterSpacing={{ base: "0.18em", md: "0.28em" }} fontWeight={700}>
-                AIRMON
+                SPINTEL
               </Heading>
               <Text fontFamily={SX.mono} fontSize="11px" color={SX.dim} letterSpacing="0.12em" display={{ base: "none", sm: "block" }}>
                 CANADIAN RADIO AIRPLAY · TELEMETRY
@@ -485,7 +487,7 @@ function Footer() {
     <Box borderTopWidth="1px" borderColor={SX.line} mt={10}>
       <Container maxW="7xl" py={6}>
         <Text fontFamily={SX.mono} fontSize="11px" color={SX.faint} lineHeight="1.7">
-          AIRMON publishes open airplay facts — what played, when, on which station — so anyone can
+          SPINTEL publishes open airplay facts — what played, when, on which station — so anyone can
           verify them independently. No audio is recorded or served.{" "}
           <Link href="https://github.com/HudsonGraeme/airmon/tree/main/radio-airplay-monitor" color={SX.accent} isExternal>
             SOURCE

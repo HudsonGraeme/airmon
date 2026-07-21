@@ -1,0 +1,16 @@
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Favicon variant of the SPINTEL mark: same geometry, heavier weights, no
+       fine detail — built to survive 16px. -->
+  <defs>
+    <linearGradient id="sweep" x1="19" y1="9.5" x2="50.4" y2="13.6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4b9cff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#4b9cff" stop-opacity="0.45"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="27" stroke="#9a9aa2" stroke-opacity="0.7" stroke-width="4"
+          stroke-dasharray="3.5 7.1" stroke-linecap="round"/>
+  <path d="M32 32 L19 9.48 A26 26 0 0 1 50.38 13.62 Z" fill="url(#sweep)"/>
+  <line x1="32" y1="32" x2="49" y2="15" stroke="#4b9cff" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="32" cy="32" r="6.5" fill="#4b9cff"/>
+  <circle cx="39.5" cy="11.5" r="5" fill="#f4f4f6"/>
+</svg>

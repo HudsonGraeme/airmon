@@ -1,6 +1,6 @@
 <div align="center">
 
-# airmon
+# <img src="radio-airplay-monitor/web/public/logo.svg" width="34" align="top"> spintel
 
 **An open, CC0 record of what played, when, on which Canadian radio station — facts, not audio.**
 
@@ -15,9 +15,9 @@
 
 ## What is this?
 
-airmon watches a handful of Canadian radio stations' **own public now-playing feeds** and records every track they announce — artist, title, timestamp, station — into an append-only log kept **inside this repository**. A GitHub Actions cron is the only moving part on the collection side: it polls, commits new spins back to `main`, and that git history *is* the database. A static site rebuilds from the committed data and serves instant client-side search, charts, and a "this week" leaderboard.
+spintel (né airmon) watches a handful of Canadian radio stations' **own public now-playing feeds** and records every track they announce — artist, title, timestamp, station — into an append-only log kept **inside this repository**. A GitHub Actions cron is the only moving part on the collection side: it polls, commits new spins back to `main`, and that git history *is* the database. A static site rebuilds from the committed data and serves instant client-side search, charts, and a "this week" leaderboard.
 
-Unlike a scraper, airmon reads only the short **text metadata** stations already publish for their web players. It never records, stores, or restreams audio — playlist facts aren't copyrightable, audio is. Keep it that way.
+Unlike a scraper, spintel reads only the short **text metadata** stations already publish for their web players. It never records, stores, or restreams audio — playlist facts aren't copyrightable, audio is. Keep it that way.
 
 No servers, no database to run, no audio. Two moving parts: a Go binary in CI and a static site.
 
@@ -147,4 +147,4 @@ It loads the baked JSON and filters/aggregates it in memory — a full scan per 
 
 ## License
 
-Data is **CC0** — playlist facts aren't copyrightable (Feist; CCH Canadian), and airmon takes no editorial position. Code is **[MIT](LICENSE)**.
+Data is **CC0** — playlist facts aren't copyrightable (Feist; CCH Canadian), and spintel takes no editorial position. Code is **[MIT](LICENSE)**.

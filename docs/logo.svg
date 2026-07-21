@@ -1,0 +1,29 @@
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SPINTEL">
+  <!-- SPINTEL mark: a tuner dial swept radar-style — the needle has just caught
+       a station blip. Accent #4b9cff on transparent; reads on dark and light. -->
+  <defs>
+    <linearGradient id="sweep" x1="19" y1="9.5" x2="50.4" y2="13.6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4b9cff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#4b9cff" stop-opacity="0.32"/>
+    </linearGradient>
+  </defs>
+
+  <!-- outer tick ring (dial) -->
+  <circle cx="32" cy="32" r="29" stroke="#8a8a92" stroke-opacity="0.55" stroke-width="1.6"
+          stroke-dasharray="1.8 5.79" stroke-linecap="round"/>
+
+  <!-- faint range rings -->
+  <circle cx="32" cy="32" r="17.5" stroke="#8a8a92" stroke-opacity="0.28" stroke-width="1.2"/>
+  <circle cx="32" cy="32" r="8.75" stroke="#8a8a92" stroke-opacity="0.28" stroke-width="1.2"/>
+
+  <!-- trailing sweep: -120° → -45° -->
+  <path d="M32 32 L19 9.48 A26 26 0 0 1 50.38 13.62 Z" fill="url(#sweep)"/>
+
+  <!-- needle at -45° -->
+  <line x1="32" y1="32" x2="50.38" y2="13.62" stroke="#4b9cff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="32" r="3.6" fill="#4b9cff"/>
+
+  <!-- detected station blip inside the sweep -->
+  <circle cx="38.5" cy="12" r="2.4" fill="#f4f4f6"/>
+  <circle cx="38.5" cy="12" r="4.6" stroke="#f4f4f6" stroke-opacity="0.35" stroke-width="1.2"/>
+</svg>
