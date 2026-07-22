@@ -238,6 +238,16 @@ func fetchCorus(st Station) ([]Spin, error) {
 			if ts.Sub(now) > 12*time.Hour {
 				ts = ts.AddDate(0, 0, -1)
 			}
+			// Freshness guard. The feed carries only a time-of-day, so the day is
+			// inferred as "today" — an inference that's only sound while the feed
+			// is live (its window spans ~40 minutes). When a station's publisher
+			// freezes, the stale entries would be re-dated every day local time
+			// passes their time-of-day again, re-ingesting the same songs as new
+			// spins daily. Anything older than a few hours is either that, or
+			// content whose true date we can't verify — skip both.
+			if now.Unix()-ts.Unix() > 3*3600 {
+				continue
+			}
 			at = ts.Unix()
 		}
 		out = append(out, Spin{Station: st.ID, Artist: a, Title: t, At: at, Src: "corus"})
